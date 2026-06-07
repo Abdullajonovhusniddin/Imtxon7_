@@ -1,12 +1,12 @@
 .container {
   padding: 24px;
-  background-color: #f8fafc;
+  background: var(--surface-strong);
   height: 100%;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   font-family: 'Inter', sans-serif;
-  color: #1e293b;
+  color: var(--text);
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -15,7 +15,7 @@
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--surface-strong);
     border-radius: 4px;
   }
   &::-webkit-scrollbar-thumb:hover {
@@ -33,13 +33,13 @@
     margin: 0;
     font-size: 20px;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text);
   }
 }
 
 .backBtn {
   background: white;
-  border: 1px solid #e2e8f0;
+  border-color: var(--border);
   border-radius: 8px;
   width: 32px;
   height: 32px;
@@ -47,14 +47,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #64748b;
+  color: var(--muted);
   transition: all 0.2s;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 
   &:hover {
-    background-color: #f8fafc;
-    color: #1e293b;
-    border-color: #cbd5e1;
+    background: var(--surface-strong);
+    color: var(--text);
+    border-color: var(--muted);
   }
 }
 
@@ -64,7 +64,7 @@
   padding: 20px 24px;
   border-radius: 12px;
   margin-bottom: 24px;
-  border: 1px solid #e2e8f0;
+  border-color: var(--border);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -80,19 +80,19 @@
 .navArrow {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--muted);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  &:hover { color: #1e293b; }
+  &:hover { color: var(--text); }
 }
 
 .monthLabel {
   font-weight: 600;
   font-size: 15px;
-  color: #1e293b;
+  color: var(--text);
 }
 
 .dateChips {
@@ -131,15 +131,15 @@
   }
 
   &.past {
-    background-color: #e2e8f0;
-    color: #64748b;
+    background: var(--surface-strong);
+    color: var(--muted);
     border: 1px solid transparent;
   }
 
   &.future {
     background-color: white;
     color: #475569;
-    border: 1px solid #e2e8f0;
+    border-color: var(--border);
   }
 
   &.disabled {
@@ -152,7 +152,7 @@
 .tabsContainer {
   display: flex;
   gap: 24px;
-  border-bottom: 1px solid #e2e8f0;
+  border-color: var(--border);
   margin-bottom: 24px;
 }
 
@@ -162,7 +162,7 @@
   padding: 12px 0;
   font-size: 16px;
   font-weight: 500;
-  color: #64748b;
+  color: var(--muted);
   cursor: pointer;
   position: relative;
 
@@ -211,7 +211,7 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: #cbd5e1;
+    background: var(--surface-strong);
     color: white;
     display: flex;
     align-items: center;
@@ -225,7 +225,7 @@
     flex-direction: column;
 
     .name { font-weight: 600; font-size: 16px; }
-    .role { color: #64748b; font-size: 14px; }
+    .role { color: var(--muted); font-size: 14px; }
   }
 }
 
@@ -245,7 +245,7 @@
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--surface-strong);
     border-radius: 4px;
   }
   &::-webkit-scrollbar-thumb:hover {
@@ -258,9 +258,9 @@
   flex-direction: column;
   gap: 4px;
 
-  .label { color: #64748b; font-size: 12px; }
+  .label { color: var(--muted); font-size: 12px; }
   .value { font-weight: 600; font-size: 14px; }
-  .status { font-weight: 500; font-size: 14px; color: #64748b; }
+  .status { font-weight: 500; font-size: 14px; color: var(--muted); }
 }
 
 /* Form Section */
@@ -278,7 +278,7 @@
       gap: 8px;
       cursor: pointer;
       font-size: 14px;
-      color: #64748b;
+      color: var(--muted);
     }
 
     input[type="radio"] {
@@ -300,14 +300,14 @@
   input[type="text"], textarea {
     width: 100%;
     padding: 12px 16px;
-    border: 1px solid #e2e8f0;
+    border-color: var(--border);
     border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
     outline: none;
     transition: border-color 0.2s;
 
-    &::placeholder { color: #94a3b8; }
+    &::placeholder { color: var(--muted); }
     &:focus { border-color: #10b981; }
   }
 
@@ -327,13 +327,13 @@
     padding: 16px;
     font-size: 14px;
     font-weight: 600;
-    color: #64748b;
-    border-bottom: 1px solid #e2e8f0;
+    color: var(--muted);
+    border-color: var(--border);
   }
 
   td {
     padding: 16px;
-    border-bottom: 1px solid #f1f5f9;
+    border-color: var(--border);
     font-size: 14px;
     font-weight: 500;
   }
@@ -347,7 +347,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background-color: #cbd5e1;
+      background: var(--surface-strong);
       color: white;
       display: flex;
       align-items: center;

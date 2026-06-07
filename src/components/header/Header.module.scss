@@ -60,11 +60,11 @@
     display: flex;
     align-items: center;
     width: min(100%, 320px);
-    gap: 8px;
+    gap: 10px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 0 12px;
+    padding: 0 14px;
     height: 44px;
     transition: border-color 0.2s ease;
 
@@ -73,11 +73,12 @@
     }
 
     .searchIcon {
-        display: block;
-        width: 100%;
-        background: url('https://www.freeiconspng.com/uploads/search-icon-png-18.png') no-repeat left center;
-        background-size: 0.9rem;
-        padding-left: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        color: var(--muted);
     }
 
     input {

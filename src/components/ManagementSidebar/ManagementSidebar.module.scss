@@ -4,7 +4,7 @@
     left: 260px;
     width: 210px;
     height: 100vh;
-    background: #ffffff;
+    background: var(--surface);
     border-right: 1px solid #f1f5f9;
     box-shadow: 4px 0 16px rgba(0, 0, 0, 0.02);
     z-index: 90;
@@ -35,7 +35,7 @@
     align-items: center;
     gap: 12px;
     padding: 16px 12px;
-    border-bottom: 1px solid #f1f5f9;
+    border-color: var(--border);
     margin-bottom: 16px;
 }
 
@@ -43,7 +43,7 @@
     margin: 0;
     font-size: 16px;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--text);
     letter-spacing: -0.3px;
 }
 
@@ -67,11 +67,11 @@
     transition: all 0.12s ease;
 
     &:hover {
-        background: #f8fafc;
-        color: #0f172a;
+        background: var(--surface-strong);
+        color: var(--text);
 
         .icon {
-            color: #0f172a;
+            color: var(--text);
         }
     }
 }

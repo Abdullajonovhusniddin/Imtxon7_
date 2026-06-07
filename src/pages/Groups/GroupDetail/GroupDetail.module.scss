@@ -28,7 +28,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--surface-strong);
     border-radius: 4px;
   }
 
@@ -54,21 +54,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #64748b;
+      color: var(--muted);
       padding: 8px;
       border-radius: 8px;
       transition: background-color 0.2s;
 
       &:hover {
-        background-color: #f1f5f9;
-        color: #0f172a;
+        background: var(--surface-strong);
+        color: var(--text);
       }
     }
 
     h1 {
       font-size: 24px;
       font-weight: 600;
-      color: #0f172a;
+      color: var(--text);
       margin: 0;
     }
 
@@ -86,8 +86,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #fff;
-    border: 1px solid #e2e8f0;
+    background: var(--surface);
+    border-color: var(--border);
     padding: 8px 16px;
     border-radius: 8px;
     font-size: 14px;
@@ -97,8 +97,8 @@
     transition: all 0.2s;
 
     &:hover {
-      background-color: #f8fafc;
-      border-color: #cbd5e1;
+      background: var(--surface-strong);
+      border-color: var(--muted);
     }
   }
 }
@@ -106,7 +106,7 @@
 .tabs {
   display: flex;
   gap: 24px;
-  border-bottom: 1px solid #e2e8f0;
+  border-color: var(--border);
   padding-bottom: 0;
 
   .tab {
@@ -115,13 +115,13 @@
     padding: 12px 0;
     font-size: 15px;
     font-weight: 500;
-    color: #64748b;
+    color: var(--muted);
     cursor: pointer;
     position: relative;
     transition: color 0.2s;
 
     &:hover {
-      color: #0f172a;
+      color: var(--text);
     }
 
     &.activeTab {
@@ -147,7 +147,7 @@
 
   .mentorsCard,
   .parametersCard {
-    background-color: #fff;
+    background: var(--surface);
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -202,14 +202,14 @@
       }
 
       &::-webkit-scrollbar-thumb {
-        background-color: #e2e8f0;
+        background: var(--surface-strong);
         border-radius: 10px;
         border: 2px solid transparent;
         background-clip: padding-box;
       }
 
       &::-webkit-scrollbar-thumb:hover {
-        background-color: #cbd5e1;
+        background: var(--surface-strong);
       }
     }
 
@@ -236,7 +236,7 @@
 
       .mentorName {
         font-size: 14px;
-        color: #0f172a;
+        color: var(--text);
         font-weight: 600;
       }
     }
@@ -247,19 +247,19 @@
       display: flex;
       justify-content: space-between;
       padding: 12px 0;
-      border-bottom: 1px solid #f1f5f9;
+      border-color: var(--border);
 
       &:last-child {
         border-bottom: none;
       }
 
       span {
-        color: #64748b;
+        color: var(--muted);
         font-size: 14px;
       }
 
       strong {
-        color: #0f172a;
+        color: var(--text);
         font-size: 14px;
         font-weight: 600;
       }
@@ -268,7 +268,7 @@
 }
 
 .scheduleSection {
-  background-color: #fff;
+  background: var(--surface);
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 24px;
@@ -277,7 +277,7 @@
   h2 {
     font-size: 18px;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--text);
     margin-top: 0;
     margin-bottom: 24px;
   }
@@ -290,7 +290,7 @@
     .scheduleItem {
       display: flex;
       align-items: center;
-      background-color: #f8fafc;
+      background: var(--surface-strong);
       padding: 16px;
       border-radius: 8px;
 
@@ -318,18 +318,18 @@
     margin-bottom: 32px;
 
     .showMoreBtn {
-      background-color: #fff;
-      border: 1px solid #e2e8f0;
+      background: var(--surface);
+      border-color: var(--border);
       padding: 8px 16px;
       border-radius: 8px;
       font-size: 14px;
-      color: #64748b;
+      color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
 
       &:hover {
-        background-color: #f8fafc;
-        color: #0f172a;
+        background: var(--surface-strong);
+        color: var(--text);
       }
     }
   }
@@ -344,13 +344,13 @@
       display: flex;
       align-items: center;
       padding: 12px 16px;
-      border-bottom: 1px solid #e2e8f0;
+      border-color: var(--border);
       background-color: #fdfdfd;
 
       span {
         font-size: 13px;
         font-weight: 500;
-        color: #64748b;
+        color: var(--muted);
       }
     }
 
@@ -358,7 +358,7 @@
       display: flex;
       align-items: center;
       padding: 16px;
-      border-bottom: 1px solid #f1f5f9;
+      border-color: var(--border);
       transition: background-color 0.15s;
 
       &:last-child {
@@ -366,7 +366,7 @@
       }
 
       &:hover {
-        background-color: #f8fafc;
+        background: var(--surface-strong);
       }
 
       span {
@@ -422,15 +422,15 @@
       width: 32px;
       height: 32px;
       border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      background-color: #fff;
-      color: #64748b;
+      border-color: var(--border);
+      background: var(--surface);
+      color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
 
       &:hover:not(:disabled) {
-        background-color: #f1f5f9;
-        color: #0f172a;
+        background: var(--surface-strong);
+        color: var(--text);
       }
 
       &:disabled {
@@ -442,7 +442,7 @@
     .monthNavLabel {
       font-size: 14px;
       font-weight: 500;
-      color: #0f172a;
+      color: var(--text);
     }
   }
 
@@ -459,7 +459,7 @@
       .studyMonthLabel {
         font-size: 15px;
         font-weight: 600;
-        color: #0f172a;
+        color: var(--text);
       }
 
       .currentMonthBadge {
@@ -485,17 +485,17 @@
         min-width: 52px;
         height: 60px;
         border-radius: 8px;
-        background-color: #f1f5f9;
+        background: var(--surface-strong);
         cursor: pointer;
         transition: all 0.2s;
 
         &:hover {
-          background-color: #e2e8f0;
+          background: var(--surface-strong);
         }
 
         .chipMonth {
           font-size: 11px;
-          color: #64748b;
+          color: var(--muted);
           font-weight: 500;
           margin-bottom: 2px;
         }
@@ -503,7 +503,7 @@
         .chipDay {
           font-size: 15px;
           font-weight: 600;
-          color: #0f172a;
+          color: var(--text);
         }
       }
     }
@@ -522,22 +522,22 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      border: 1px solid #e2e8f0;
-      background-color: #fff;
-      color: #64748b;
+      border-color: var(--border);
+      background: var(--surface);
+      color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
 
       &:hover {
-        background-color: #f1f5f9;
-        color: #0f172a;
+        background: var(--surface-strong);
+        color: var(--text);
       }
     }
 
     .monthText {
       font-size: 15px;
       font-weight: 600;
-      color: #0f172a;
+      color: var(--text);
     }
   }
 
@@ -555,12 +555,12 @@
     }
 
     &::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: var(--surface-strong);
       border-radius: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: var(--surface-strong);
       border-radius: 4px;
     }
 
@@ -577,26 +577,26 @@
       /* Ensure it doesn't shrink */
       height: 72px;
       border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      background-color: #fff;
+      border-color: var(--border);
+      background: var(--surface);
       cursor: pointer;
       transition: all 0.2s;
 
       .month {
         font-size: 12px;
-        color: #64748b;
+        color: var(--muted);
         margin-bottom: 4px;
       }
 
       .day {
         font-size: 16px;
         font-weight: 600;
-        color: #0f172a;
+        color: var(--text);
       }
 
       &.activeDay {
-        background-color: #e2e8f0;
-        border-color: #cbd5e1;
+        background: var(--surface-strong);
+        border-color: var(--muted);
 
         .month,
         .day {
@@ -605,8 +605,8 @@
       }
 
       &:hover:not(.activeDay) {
-        border-color: #cbd5e1;
-        background-color: #f8fafc;
+        border-color: var(--muted);
+        background: var(--surface-strong);
       }
     }
   }
@@ -616,18 +616,18 @@
     justify-content: center;
 
     .showAllBtn {
-      background-color: #fff;
-      border: 1px solid #e2e8f0;
+      background: var(--surface);
+      border-color: var(--border);
       padding: 8px 16px;
       border-radius: 8px;
       font-size: 14px;
-      color: #64748b;
+      color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
 
       &:hover {
-        background-color: #f8fafc;
-        color: #0f172a;
+        background: var(--surface-strong);
+        color: var(--text);
       }
     }
   }
@@ -653,12 +653,12 @@
         margin: 0;
         font-size: 18px;
         font-weight: 600;
-        color: #0f172a;
+        color: var(--text);
       }
 
       .subTabs {
         display: flex;
-        background-color: #f8fafc;
+        background: var(--surface-strong);
         border-radius: 8px;
         padding: 4px;
 
@@ -669,17 +669,17 @@
           border-radius: 6px;
           font-size: 14px;
           font-weight: 500;
-          color: #64748b;
+          color: var(--muted);
           cursor: pointer;
           transition: all 0.2s;
 
           &:hover:not(.activeSubTab) {
-            color: #0f172a;
+            color: var(--text);
           }
 
           &.activeSubTab {
-            background-color: #fff;
-            color: #0f172a;
+            background: var(--surface);
+            color: var(--text);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
           }
         }
@@ -704,7 +704,7 @@
   }
 
   .tableCard {
-    background-color: #fff;
+    background: var(--surface);
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -731,12 +731,12 @@
         }
 
         &::-webkit-scrollbar-track {
-          background: #f8fafc;
+          background: var(--surface-strong);
           border-radius: 4px;
         }
 
         &::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
+          background: var(--surface-strong);
           border-radius: 6px;
           border: 2px solid #f8fafc;
         }
@@ -825,8 +825,8 @@
       th {
         font-size: 13px;
         font-weight: 500;
-        color: #64748b;
-        border-bottom: 1px solid #e2e8f0;
+        color: var(--muted);
+        border-color: var(--border);
         background-color: #fdfdfd;
 
         svg {
@@ -836,8 +836,8 @@
 
       td {
         font-size: 14px;
-        color: #0f172a;
-        border-bottom: 1px solid #f1f5f9;
+        color: var(--text);
+        border-color: var(--border);
 
         .videoNameCell {
           display: flex;
@@ -860,7 +860,7 @@
       }
 
       tr:hover td {
-        background-color: #f8fafc;
+        background: var(--surface-strong);
       }
 
       .lessonTitle {
@@ -890,7 +890,7 @@
       }
 
       .moreIcon {
-        color: #94a3b8;
+        color: var(--muted);
         cursor: pointer;
         transition: color 0.2s;
 
@@ -918,7 +918,7 @@
 
       .lessonNameCell {
         font-weight: 500;
-        color: #0f172a;
+        color: var(--text);
       }
 
       .statusPill {
@@ -964,19 +964,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  border-bottom: 1px solid #f1f5f9;
+  border-color: var(--border);
 
   h2 {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text);
   }
 
   .closeBtn {
     background: none;
     border: none;
-    color: #94a3b8;
+    color: var(--muted);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -986,8 +986,8 @@
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #f1f5f9;
-      color: #64748b;
+      background: var(--surface-strong);
+      color: var(--muted);
     }
   }
 }
@@ -1019,12 +1019,12 @@
   .uploadTitle {
     font-weight: 600;
     font-size: 15px;
-    color: #1e293b;
+    color: var(--text);
     margin: 0 0 12px 0;
   }
 
   .uploadDesc {
-    color: #94a3b8;
+    color: var(--muted);
     font-size: 13px;
     margin: 0;
   }
@@ -1036,21 +1036,21 @@
   justify-content: flex-end;
   gap: 12px;
   background-color: #fcfcfd;
-  border-top: 1px solid #f1f5f9;
+  border-color: var(--border);
 
   .cancelBtn {
     padding: 10px 24px;
     border: none;
     background: transparent;
-    color: #64748b;
+    color: var(--muted);
     font-weight: 600;
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #f1f5f9;
-      color: #334155;
+      background: var(--surface-strong);
+      color: var(--text);
     }
   }
 
@@ -1077,7 +1077,7 @@
 .selectedVideoTable {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #e2e8f0;
+  border-color: var(--border);
   border-radius: 8px;
   overflow: hidden;
 
@@ -1085,11 +1085,11 @@
   td {
     padding: 16px;
     text-align: left;
-    border-bottom: 1px solid #e2e8f0;
+    border-color: var(--border);
   }
 
   th {
-    background-color: #f8fafc;
+    background: var(--surface-strong);
     color: #475569;
     font-weight: 600;
     font-size: 14px;
@@ -1100,7 +1100,7 @@
   }
 
   td {
-    color: #1e293b;
+    color: var(--text);
     font-size: 14px;
   }
 
@@ -1116,10 +1116,10 @@
   .videoNameInput {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--border);
     border-radius: 6px;
     outline: none;
-    color: #1e293b;
+    color: var(--text);
     font-size: 14px;
     transition: border-color 0.2s;
 
@@ -1137,7 +1137,7 @@
   .deleteIconBtn {
     background: none;
     border: none;
-    color: #94a3b8;
+    color: var(--muted);
     cursor: pointer;
     padding: 4px;
     border-radius: 4px;
@@ -1185,7 +1185,7 @@
     .closeBtn {
       background: none;
       border: none;
-      color: #94a3b8;
+      color: var(--muted);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -1196,7 +1196,7 @@
       flex-shrink: 0;
 
       &:hover {
-        background-color: #334155;
+        background-color: var(--text);
         color: #f1f5f9;
       }
     }

@@ -18,21 +18,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #64748b;
+    color: var(--muted);
     padding: 6px;
     border-radius: 8px;
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #f1f5f9;
-      color: #0f172a;
+      background: var(--surface-strong);
+      color: var(--text);
     }
   }
 
   h1 {
     font-size: 18px;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--text);
     margin: 0;
   }
 }
@@ -51,7 +51,7 @@
   label {
     font-size: 13px;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--text);
 
     span {
       color: #ef4444;
@@ -61,10 +61,10 @@
   .select {
     width: 100%;
     padding: 9px 16px;
-    border: 1px solid #e2e8f0;
+    border-color: var(--border);
     border-radius: 8px;
-    background-color: #f8fafc;
-    color: #64748b;
+    background: var(--surface-strong);
+    color: var(--muted);
     font-size: 13px;
     outline: none;
     transition: border-color 0.2s;
@@ -80,18 +80,18 @@
   }
 
   .richEditor {
-    border: 1px solid #e2e8f0;
+    border-color: var(--border);
     border-radius: 8px;
     overflow: hidden;
-    background-color: #fff;
+    background: var(--surface);
 
     .toolbar {
       display: flex;
       align-items: center;
       gap: 6px;
       padding: 6px 10px;
-      border-bottom: 1px solid #e2e8f0;
-      background-color: #f8fafc;
+      border-color: var(--border);
+      background: var(--surface-strong);
       flex-wrap: wrap;
 
       select {
@@ -106,7 +106,7 @@
       .divider {
         width: 1px;
         height: 16px;
-        background-color: #cbd5e1;
+        background: var(--surface-strong);
         margin: 0 2px;
       }
 
@@ -122,15 +122,15 @@
         transition: all 0.2s;
 
         &:hover {
-          background-color: #e2e8f0;
-          color: #0f172a;
+          background: var(--surface-strong);
+          color: var(--text);
         }
       }
 
       .toolBtn {
         background: none;
         border: none;
-        color: #64748b;
+        color: var(--muted);
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -140,8 +140,8 @@
         transition: all 0.2s;
 
         &:hover {
-          background-color: #e2e8f0;
-          color: #0f172a;
+          background: var(--surface-strong);
+          color: var(--text);
         }
       }
     }
@@ -153,31 +153,31 @@
       border: none;
       resize: none;
       font-size: 13px;
-      color: #0f172a;
+      color: var(--text);
       outline: none;
       font-family: inherit;
 
       &::placeholder {
-        color: #94a3b8;
+        color: var(--muted);
       }
     }
   }
 }
 
 .uploadArea {
-  border: 2px dashed #e2e8f0;
+  border: 2px dashed var(--border);
   border-radius: 8px;
   padding: 20px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8fafc;
+  background: var(--surface-strong);
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    border-color: #cbd5e1;
-    background-color: #f1f5f9;
+    border-color: var(--muted);
+    background: var(--surface-strong);
   }
 
   .uploadContent {
@@ -193,7 +193,7 @@
 
     p {
       margin: 0;
-      color: #64748b;
+      color: var(--muted);
       font-size: 13px;
     }
   }

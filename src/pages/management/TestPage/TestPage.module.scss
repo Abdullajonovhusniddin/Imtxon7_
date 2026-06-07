@@ -12,7 +12,7 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  background: #fff;
+  background: var(--surface);
   border-radius: 20px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   padding: 56px 64px;
@@ -44,7 +44,7 @@
   right: -8px;
   font-size: 22px !important;
   color: #f59e0b;
-  background: #fff;
+  background: var(--surface);
   border-radius: 50%;
   padding: 3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
@@ -67,13 +67,13 @@
 .title {
   font-size: 24px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text);
   margin: 0;
 }
 
 .description {
   font-size: 14px;
-  color: #64748b;
+  color: var(--muted);
   line-height: 1.7;
   margin: 0;
 
@@ -87,8 +87,8 @@
   align-items: center;
   gap: 8px;
   margin-top: 8px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--surface-strong);
+  border-color: var(--border);
   border-radius: 999px;
   padding: 6px 16px;
 }

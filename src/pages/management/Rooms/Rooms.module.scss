@@ -1,6 +1,6 @@
 .roomsContainer {
     padding: 24px;
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
@@ -78,13 +78,13 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #e2e8f0;
+        background: var(--surface-strong);
         border: 2px solid transparent;
         background-clip: padding-box;
         border-radius: 5px;
         
         &:hover {
-            background-color: #cbd5e1;
+            background: var(--surface-strong);
         }
     }
 
@@ -215,13 +215,13 @@
         }
 
         &::placeholder {
-            color: #9ca3af;
+            color: var(--muted);
         }
     }
 }
 
 .cancelBtn {
-    background: #ffffff;
+    background: var(--surface);
     color: #374151;
     border: 1px solid #e5e7eb;
     padding: 8px 16px;

@@ -185,7 +185,8 @@ export default function Groups() {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(255, 255, 255, 0.4)',
+                            backgroundColor: 'var(--bg)',
+                            opacity: 0.7,
                             zIndex: 10
                         }}>
                             <CircularProgress sx={{ color: '#6c35de' }} />
@@ -209,7 +210,7 @@ export default function Groups() {
                         </thead>
                         <tbody>
                             {groups.map((group) => (
-                                <tr key={group.id} onClick={() => navigate(`/dashboard/groups/${group.id}`)} style={{ cursor: 'pointer', transition: 'background-color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                <tr key={group.id} onClick={() => navigate(`/dashboard/groups/${group.id}`)} style={{ cursor: 'pointer', transition: 'background-color 0.2s' }}>
                                     <td>
                                         <div className={styles.statusCell}>
                                             <Switch
@@ -238,7 +239,7 @@ export default function Groups() {
                                                     },
                                                     '& .MuiSwitch-track': {
                                                         borderRadius: 12,
-                                                        backgroundColor: '#e2e8f0',
+                                                        backgroundColor: 'var(--border)',
                                                         opacity: 1,
                                                     },
                                                 }}
@@ -292,8 +293,9 @@ export default function Groups() {
                     onClick={(e) => e.stopPropagation()}
                     PaperProps={{
                         sx: {
-                            boxShadow: '0 6px 18px rgba(16,24,40,0.08)',
-                            border: '1px solid #e6edf6',
+                            boxShadow: 'var(--card-shadow)',
+                            border: '1px solid var(--border)',
+                            backgroundColor: 'var(--surface)',
                             borderRadius: '8px',
                             padding: '4px',
                             minWidth: '120px',
@@ -310,12 +312,12 @@ export default function Groups() {
                             alignItems: 'center',
                             gap: '8px',
                             padding: '8px 12px',
-                            color: '#0f172a',
+                            color: 'var(--text)',
                             fontWeight: 600,
                             fontSize: '14px',
                             borderRadius: '6px',
                             '&:hover': {
-                                backgroundColor: '#f8fafc',
+                                backgroundColor: 'var(--surface-strong)',
                             }
                         }}
                     >

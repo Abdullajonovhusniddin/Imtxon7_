@@ -1,21 +1,22 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
-import DiamondRoundedIcon from '@mui/icons-material/DiamondRounded';
-import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import DiamondOutlinedIcon from '@mui/icons-material/DiamondOutlined';
+import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 
 const menuItems = [
-    { label: "Asosiy", icon: <HomeRoundedIcon />, path: "/dashboard" },
-    { label: "O'qituvchilar", icon: <PersonRoundedIcon />, path: "/dashboard/teachers" },
-    { label: "Guruhlar", icon: <GroupRoundedIcon />, path: "/dashboard/groups" },
-    { label: "Talabalar", icon: <DiamondRoundedIcon />, path: "/dashboard/students" },
-    { label: "Sovg'alar", icon: <CardGiftcardRoundedIcon />, path: "/dashboard/gifts" },
-    { label: "Boshqarish", icon: <SettingsRoundedIcon />, path: "/management" },
+    { label: "Asosiy", icon: <HomeOutlinedIcon />, path: "/dashboard" },
+    { label: "O'qituvchilar", icon: <PersonOutlineRoundedIcon />, path: "/dashboard/teachers" },
+    { label: "Guruhlar", icon: <GroupOutlinedIcon />, path: "/dashboard/groups" },
+    { label: "Talabalar", icon: <DiamondOutlinedIcon />, path: "/dashboard/students" },
+    { label: "Sovg'alar", icon: <CardGiftcardOutlinedIcon />, path: "/dashboard/gifts" },
+    { label: "Boshqarish", icon: <SettingsOutlinedIcon />, path: "/management" },
 ];
 
 export default function Sidebar({ isCollapsed, toggleSidebar, isSubSidebarOpen, toggleSubSidebar }) {
@@ -76,7 +77,8 @@ export default function Sidebar({ isCollapsed, toggleSidebar, isSubSidebarOpen, 
                 </div>
                 {!isCollapsed && (
                     <button className={styles.subBtn}>
-                        <i style={{ transform: 'rotate(50deg)' }} className="bi bi-arrow-clockwise"></i><p className={styles.subtext}>Obunani yangilash</p>
+                        <RefreshRoundedIcon className={styles.subIcon} fontSize="small" />
+                        <p className={styles.subtext}>Obunani yangilash</p>
                     </button>
                 )}
             </div>

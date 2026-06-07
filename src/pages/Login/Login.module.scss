@@ -38,11 +38,11 @@
     &__input {
         padding: 10px 14px;
         border-radius: 8px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--border);
         outline: none;
         font-size: 14px;
-        color: #2d3748;
-        background-color: #ffffff;
+        color: var(--text);
+        background-color: var(--surface);
         transition: all 0.2s ease-in-out;
 
         &::placeholder {
@@ -91,21 +91,21 @@
 .right_side {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     position: relative;
     overflow: hidden;
     background-color: #fafbfc;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 
 .right_container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 100%;
     max-width: 400px;
-    padding: 24px;
     box-sizing: border-box;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
 }
 
 .title {
@@ -167,24 +167,24 @@
 // Dark mode styles
 :global(.dark) {
     .right_side {
-        background-color: #0f172a;
+        background-color: var(--bg);
     }
     .title, .lms_login {
-        color: #f1f5f9;
+        color: var(--text);
     }
     .form {
         &__label {
-            color: #cbd5e1;
+            color: var(--muted);
         }
         &__input {
-            background-color: #1e293b;
-            border-color: #334155;
-            color: #f1f5f9;
+            background-color: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
             &::placeholder {
-                color: #64748b;
+                color: var(--muted);
             }
             &:focus {
-                border-color: #6c35de;
+                border-color: var(--primary);
             }
         }
     }
@@ -200,27 +200,24 @@
     .left_side {
         display: none;
     }
-
-    .right_container {
-        padding: 0 50px;
-        width: 100%;
-    }
-
+    
     .right_side {
-        height: 100dvh;
+        padding: 60px 20px;
     }
 }
 
 
 @media (max-width:640px) {
     .right_container {
-        padding: 0 40px;
+        max-width: 100%;
     }
+    .title { font-size: 10px; }
+    .lms_login { font-size: 16px; margin: 16px 0; }
 }
 
 @media (max-width:400px) {
     .right_container {
-        padding: 0 30px;
+        padding: 0 10px;
     }
 
     .lisence {

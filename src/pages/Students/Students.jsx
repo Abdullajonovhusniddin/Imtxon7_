@@ -189,7 +189,8 @@ export default function Students() {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(255, 255, 255, 0.4)',
+                            backgroundColor: 'var(--bg)',
+                            opacity: 0.8,
                             zIndex: 10
                         }}>
                             <CircularProgress sx={{ color: '#6c35de' }} />
@@ -235,7 +236,7 @@ export default function Students() {
                                             ) : (
                                                 <div
                                                     className={styles.initialAvatar}
-                                                    style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#f0f0f0', color: '#555', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', marginRight: '10px' }}
+                                                    style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'var(--surface-strong)', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', marginRight: '10px' }}
                                                 >
                                                     {student.full_name ? student.full_name.charAt(0).toUpperCase() : 'S'}
                                                 </div>
