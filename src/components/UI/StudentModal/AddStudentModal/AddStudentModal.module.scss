@@ -1,0 +1,356 @@
+.modal {
+    width: 24%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.headerText {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #f3f4f6;
+        color: #4b5563;
+    }
+
+    svg {
+        font-size: 24px;
+    }
+}
+
+.body {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #e5e7eb;
+        border-radius: 10px;
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+    }
+
+    input {
+        padding: 10px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #111827;
+        outline: none;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: #6c35de;
+        }
+
+        &::placeholder {
+            color: #9ca3af;
+        }
+    }
+}
+
+.dateInputWrapper {
+    width: 100%;
+    position: relative;
+    
+    input {
+        width: 100%;
+        display: block;
+        padding: 10px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #111827;
+        outline: none;
+        background: #ffffff;
+        font-family: inherit;
+
+        &::-webkit-calendar-picker-indicator {
+            opacity: 0; /* Hide default icon since we use a custom one or just let it overlay */
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            z-index: 2;
+        }
+    }
+}
+
+.calendarIcon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #111827; /* Dark icon like in mockup */
+    font-size: 20px !important;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.addGroupBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #6c35de;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #f9fafb;
+        border-color: #6c35de;
+    }
+}
+
+.uploadArea {
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: #6c35de;
+        background: #fdfbff;
+    }
+}
+
+.uploadIcon {
+    color: #9ca3af;
+    font-size: 32px !important;
+}
+
+.uploadText {
+    font-size: 14px;
+    color: #4b5563;
+    margin: 0;
+}
+
+.purpleText {
+    color: #6c35de;
+    font-weight: 600;
+}
+
+.uploadHint {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.footer {
+    padding: 16px 24px;
+    background: #ffffff;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.logoWrapper {
+    position: absolute;
+    right: 10px;
+    bottom: -10px;
+    pointer-events: none;
+}
+
+.footerButtons {
+    display: flex;
+    gap: 12px;
+    z-index: 1;
+    width: 100%;
+}
+
+.cancelBtn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #e5e7eb;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #d1d5db;
+    }
+}
+
+.saveBtn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #6c35de;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #5a2cc0;
+    }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.groupsInputContainer {
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 42px;
+    background: #ffffff;
+    transition: border-color 0.2s;
+
+    &:focus-within {
+        border-color: #6c35de;
+    }
+}
+
+.groupTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.groupTag {
+    background: #f3effd;
+    color: #6c35de;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.groupTagDeleted {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px dashed #fca5a5;
+}
+
+.removeGroupBtn {
+    background: none;
+    border: none;
+    color: #6c35de;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover {
+        background: #6c35de;
+        color: #ffffff;
+    }
+}
+
+.addGroupBtnInline {
+    display: flex;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: #6c35de;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0 0 0;
+    align-self: flex-start;
+    transition: color 0.2s;
+
+    &:hover {
+        color: #5a2cc0;
+    }
+}
+
+.slideOut {
+    animation: slideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+}

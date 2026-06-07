@@ -1,0 +1,67 @@
+:root {
+    color-scheme: light;
+    font-family: 'Inter', sans-serif;
+    --bg: #eef0f5;
+    --surface: #ffffff;
+    --surface-strong: #f8fafc;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --primary: #6c35de;
+    --primary-strong: #5a2cc0;
+    --card-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+    color-scheme: dark;
+    --bg: #0b1220;
+    --surface: #111827;
+    --surface-strong: #1f2937;
+    --text: #e2e8f8;
+    --muted: #94a3b8;
+    --border: #334155;
+    --primary: #8b5cf6;
+    --primary-strong: #7c3aed;
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+
+    // Modal va boshqa oynalar tungi rejimda oq bo'lib qolmasligi uchun
+    [class*="modal"], [class*="Modal"], [class*="dialog"], [class*="Dialog"] {
+        background-color: var(--surface) !important;
+        color: var(--text) !important;
+    }
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family, 'Inter'), sans-serif;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
