@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
-import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import { useNavigate, useParams, useLocation, Routes, Route } from 'react-router-dom'
 import { api } from '../api'
 
 const getUserRole = () => {
@@ -44,9 +44,19 @@ import {
 } from 'lucide-react'
 const TeachersPage = lazy(() => import('./TeachersPage'))
 const StudentsPage = lazy(() => import('./StudentsPage'))
-const GroupsPage = lazy(() => import('./GroupsPage'))
 const DynamicSubPage = lazy(() => import('./DynamicSubPage'))
-const GroupDetail = lazy(() => import('./GroupDetail'))
+
+// Group routing components
+const GroupsPage = lazy(() => import('./Groups/Groups'))
+const ArchiveGroups = lazy(() => import('./Groups/ArchiveGroups'))
+const GroupDetail = lazy(() => import('./Groups/GroupDetail/GroupDetail'))
+const LessonDetail = lazy(() => import('./Groups/LessonDetail/LessonDetail'))
+const CreateHomework = lazy(() => import('./Groups/CreateHomework/CreateHomework'))
+const HomeworkResults = lazy(() => import('./Groups/HomeworkResults/HomeworkResults'))
+const StudentHomeworkDetail = lazy(() => import('./Groups/HomeworkResults/StudentHomeworkDetail'))
+const ImtihonResults = lazy(() => import('./Groups/ImtihonResults/ImtihonResults'))
+const StudentImtihonDetail = lazy(() => import('./Groups/ImtihonResults/StudentImtihonDetail'))
+
 
 const menuItems = [
   { id: 'asosiy', label: 'Asosiy', icon: LayoutDashboard, path: '/dashboard' },
@@ -685,7 +695,21 @@ function DashboardPage({ activePage = 'dashboard' }) {
             {activeMenu === 'talabalar' && <StudentsPage language={language} />}
 
             {/* ── GROUPS ── */}
-            {activeMenu === 'guruhlar' && (id ? <GroupDetail groupId={id} language={language} /> : <GroupsPage language={language} />)}
+            {activeMenu === 'guruhlar' && (
+              <Routes>
+                <Route path="/" element={<GroupsPage />} />
+                <Route path="archive" element={<ArchiveGroups />} />
+                <Route path=":id" element={<GroupDetail />} />
+                <Route path=":id/lesson/:date" element={<LessonDetail />} />
+                <Route path=":id/homework/create" element={<CreateHomework />} />
+                <Route path=":id/homework/:homeworkId/results" element={<HomeworkResults />} />
+                <Route path=":id/homework/:homeworkId/results/:resultId" element={<StudentHomeworkDetail />} />
+                <Route path=":id/exam/:examId/results" element={<ImtihonResults />} />
+                <Route path=":id/exam/:examId/results/:resultId" element={<StudentImtihonDetail />} />
+                <Route path="*" element={<GroupsPage />} />
+              </Routes>
+            )}
+
 
             {/* ── GIFTS / SOVG'ALAR ── */}
             {activeMenu === 'sovgalar' && (

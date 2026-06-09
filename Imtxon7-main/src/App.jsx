@@ -6,12 +6,6 @@ const getAuthToken = () => sessionStorage.getItem('accessToken')
 // Lazy loading pages for better performance
 const LoginPage = lazy(() => import('./pages/LoginPage'))
 const DashboardPage = lazy(() => import('./pages/DashboardPage'))
-const TeachersPage = lazy(() => import('./pages/TeachersPage'))
-const StudentsPage = lazy(() => import('./pages/StudentsPage'))
-const GroupsPage = lazy(() => import('./pages/GroupsPage'))
-const GroupDetail = lazy(() => import('./pages/GroupDetail'))
-const DynamicSubPage = lazy(() => import('./pages/DynamicSubPage'))
-const pageComponents = { TeachersPage, StudentsPage, GroupsPage, GroupDetail, DynamicSubPage }
 
 // Loading component
 const PageLoader = () => {
@@ -49,7 +43,6 @@ const PublicRoute = ({ children }) => {
 }
 
 function App() {
-  void pageComponents
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
@@ -77,12 +70,7 @@ function App() {
           </ProtectedRoute>
         } />
         
-        <Route path="/groups" element={
-          <ProtectedRoute>
-            <DashboardPage activePage="groups" />
-          </ProtectedRoute>
-        } />
-        <Route path="/groups/:id" element={
+        <Route path="/groups/*" element={
           <ProtectedRoute>
             <DashboardPage activePage="groups" />
           </ProtectedRoute>

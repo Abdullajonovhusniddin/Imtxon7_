@@ -1,52 +1,65 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../api";
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./GroupDetail.module.scss";
 
-import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
-import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
-import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
-import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+// Icons
+import PersonOutlineRoundedIcon from '@mui/icons-material/esm/PersonOutlineRounded.js';;
+import TimerOutlinedIcon from '@mui/icons-material/esm/TimerOutlined.js';;
+import CheckCircleOutlineRoundedIcon from '@mui/icons-material/esm/CheckCircleOutlineRounded.js';;
+import MoreVertRoundedIcon from '@mui/icons-material/esm/MoreVertRounded.js';;
 
-export default function Imtihonlar({ groupId }) {
+export default function Imtihonlar() {
+    const { id } = useParams();
     const navigate = useNavigate();
-    const [exams, setExams] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        if (!groupId) return;
-        setIsLoading(true);
-        // Assuming exams might come from a specific endpoint or homework with specific criteria
-        // Here we mock or fetch if API exists. Let's try fetching from /exams if it exists, or fallback to mock
-        api.get(`/homework/${groupId}`)
-            .then(res => {
-                const data = res.data?.data || res.data || [];
-                // If API returns all homeworks, you might filter for exams here. 
-                // For now, if empty, we provide mock just to show UI if needed, or just show empty.
-                const items = Array.isArray(data) ? data : [data];
-                setExams(items.filter(item => item.title?.toLowerCase().includes('imtihon') || item.topic?.toLowerCase().includes('imtihon')));
-            })
-            .catch(err => console.error("Exams fetch err:", err))
-            .finally(() => setIsLoading(false));
-    }, [groupId]);
+    // Fake data for Imtihonlar
+    const fakeImtihonlarData = [
+        {
+            id: 1,
+            topic: "1-oy Oraliq Imtihon",
+            existStudentsIngroup: 15,
+            homeworkPending: 3,
+            homeworkAccept: 12,
+            created_at: "2026-05-15T10:00:00Z",
+            homework: [{ id: 991, created_at: "2026-05-15T10:00:00Z" }]
+        },
+        {
+            id: 2,
+            topic: "2-oy Yakuniy Imtihon",
+            existStudentsIngroup: 15,
+            homeworkPending: 0,
+            homeworkAccept: 15,
+            created_at: "2026-06-15T10:00:00Z",
+            homework: [{ id: 992, created_at: "2026-06-15T10:00:00Z" }]
+        },
+        {
+            id: 3,
+            topic: "3-oy Oraliq Imtihon",
+            existStudentsIngroup: 15,
+            homeworkPending: 15,
+            homeworkAccept: 0,
+            created_at: "2026-07-15T10:00:00Z",
+            homework: [{ id: 993, created_at: "2026-07-15T10:00:00Z" }]
+        }
+    ];
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return "";
         const months = ["Yan", "Fev", "Mar", "Apr", "May", "Iyun", "Iyul", "Avg", "Sen", "Okt", "Noy", "Dek"];
-        return `${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]}, ${date.getFullYear()}`;
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${day} ${months[date.getMonth()]}, ${date.getFullYear()}`;
     };
 
     const formatDateTime = (dateString) => {
         if (!dateString) return "-";
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return "-";
+        const datePart = formatDate(dateString);
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${formatDate(dateString)} ${hours}:${minutes}`;
+        return `${datePart} ${hours}:${minutes}`;
     };
 
     const addDays = (dateString, days) => {
@@ -59,11 +72,6 @@ export default function Imtihonlar({ groupId }) {
 
     return (
         <div style={{ position: 'relative', width: '100%', minHeight: '150px' }}>
-            {isLoading && (
-                <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.4)', zIndex: 10 }}>
-                    <CircularProgress sx={{ color: '#6c35de' }} />
-                </Box>
-            )}
             <table className={styles.lessonsTable}>
                 <thead>
                     <tr>
@@ -79,21 +87,25 @@ export default function Imtihonlar({ groupId }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {exams.length > 0 ? exams.map((lesson, idx) => (
+                    {fakeImtihonlarData.map((lesson, idx) => (
                         <tr
                             key={`${lesson.id}-${idx}`}
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                                const examId = lesson.homework?.[0]?.id || lesson.id;
-                                if (examId) navigate(`/dashboard/groups/${groupId}/exam/${examId}/results`);
+                                const examId = lesson.homework?.[0]?.id;
+                                if (examId) navigate(`/groups/${id}/exam/${examId}/results`);
                             }}
                         >
                             <td>{idx + 1}</td>
                             <td>
                                 {lesson.homeworkPending > 0 ? (
-                                    <div className={styles.pillOrange}>{lesson.topic || lesson.title}</div>
+                                    <div className={styles.pillOrange}>
+                                        {lesson.topic}
+                                    </div>
                                 ) : (
-                                    <div className={styles.lessonTitleText}>{lesson.topic || lesson.title}</div>
+                                    <div className={styles.lessonTitleText}>
+                                        {lesson.topic}
+                                    </div>
                                 )}
                             </td>
                             <td>{lesson.existStudentsIngroup || 0}</td>
@@ -104,11 +116,7 @@ export default function Imtihonlar({ groupId }) {
                             <td className={styles.timeCell}>{formatDate(lesson.created_at)}</td>
                             <td><MoreVertRoundedIcon className={styles.moreIcon} /></td>
                         </tr>
-                    )) : (
-                        <tr>
-                            <td colSpan="9" style={{ textAlign: "center", padding: "32px", color: "#94a3b8" }}>Imtihonlar topilmadi</td>
-                        </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
         </div>
