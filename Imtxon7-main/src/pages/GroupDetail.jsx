@@ -4,6 +4,7 @@ import { API_BASE, deleteJson, getJson, getUserRole, postJson } from '../api'
 import {
   ArrowLeft,
   BarChart3,
+  CheckCircle2,
   Download,
   Eye,
   Info,
@@ -16,7 +17,6 @@ import {
   X,
   XCircle
 } from 'lucide-react'
-import s from './GroupDetail.module.scss'
 
 const GROUP_STUDENTS_API = '/groups/one/students'
 const GROUP_ONE_API = '/groups/one'
@@ -347,10 +347,10 @@ export default function GroupDetail({ groupId }) {
     const scheduleItems = schedules.length > 0
       ? schedules
       : [{
-          day: group?.week_day || group?.days,
-          startTime: group?.start_time || group?.time || '',
-          endTime: group?.end_time || ''
-        }]
+        day: group?.week_day || group?.days,
+        startTime: group?.start_time || group?.time || '',
+        endTime: group?.end_time || ''
+      }]
 
     const labels = scheduleItems
       .map(item => {
@@ -684,10 +684,10 @@ export default function GroupDetail({ groupId }) {
       await loadHomeworks(true)
       try {
         if (window && window.opener && !window.opener.closed) {
-          try { window.opener.location.reload() } catch (err) { }
-          try { window.close() } catch (err) { }
+          try { window.opener.location.reload() } catch (e) { }
+          try { window.close() } catch (e) { }
         }
-      } catch (err) {
+      } catch (e) {
         // ignore
       }
     } catch (err) {
@@ -845,19 +845,18 @@ export default function GroupDetail({ groupId }) {
   }
 
   if (loading) return (
-    <div className={s.loading}>
-      <div className={s.spinner} />
-      <span>Yuklanmoqda...</span>
+    <div className="flex flex-col justify-center items-center py-24 gap-3 select-none">
+      <div className="w-10 h-10 border-4 border-violet-100 dark:border-violet-955 border-t-violet-600 rounded-full animate-spin" />
+      <span className="text-sm font-semibold text-slate-400 dark:text-slate-500">Yuklanmoqda...</span>
     </div>
   )
-
   if (!group) return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 80, gap: 16 }}>
-      <div style={{ padding: 20, backgroundColor: '#fef2f2', borderRadius: 16, color: '#ef4444' }}>
-        <XCircle size={32} />
+    <div className="flex flex-col justify-center items-center py-20 text-center gap-4 select-none">
+      <div className="w-14 h-14 bg-rose-50 dark:bg-rose-955/20 text-rose-500 rounded-2xl flex items-center justify-center border border-rose-100 dark:border-rose-900/30">
+        <XCircle size={28} />
       </div>
-      <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>Guruh topilmadi</h3>
-      <p style={{ fontSize: 13, color: 'var(--muted)', maxWidth: 300, textAlign: 'center' }}>Qidirilayotgan guruh bazadan topilmadi yoki o'chirilgan bo'lishi mumkin.</p>
+      <h3 className="font-extrabold text-lg text-slate-800 dark:text-white">Guruh topilmadi</h3>
+      <p className="text-sm text-slate-400 dark:text-slate-500 max-w-[340px]">Qidirilayotgan guruh bazadan topilmadi yoki o'chirilgan bo'lishi mumkin.</p>
     </div>
   )
 
@@ -901,45 +900,53 @@ export default function GroupDetail({ groupId }) {
   const selectedGrade = Number(checkForm.grade || 0)
 
   return (
-    <div className={s.container}>
+    <div className="py-6 px-0 flex flex-col gap-6 flex-1 min-h-0 overflow-y-auto select-none">
       {/* HEADER */}
-      <header className={s.header}>
-        <div className={s.headerLeft}>
-          <button className={s.backBtn} onClick={() => navigate('/groups')} aria-label="Orqaga">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 dark:border-slate-800 pb-4 gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-650 dark:hover:text-slate-200 hover:bg-slate-105 dark:hover:bg-slate-800 transition-all cursor-pointer"
+            onClick={() => navigate('/groups')}
+            aria-label="Orqaga"
+          >
             <ArrowLeft size={20} />
           </button>
-          <h1 className={s.groupTitle}>{getGroupName()}</h1>
-          <span className={s.statusBadge}>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">{getGroupName()}</h1>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border border-emerald-105 dark:border-emerald-900/20 uppercase tracking-wide">
             {group.status || 'Aktiv'}
           </span>
         </div>
-        <div className={s.headerRight}>
-          <button className={s.statsBtn}>
+        <div className="flex items-center gap-2">
+          <button className="inline-flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer shadow-sm">
             <BarChart3 size={18} />
             Statistika
           </button>
-          <button className={s.deleteBtn} title="Guruhni o'chirish" onClick={deleteGroup}>
+          <button
+            className="p-2 rounded-xl text-rose-500 hover:text-rose-700 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-all cursor-pointer"
+            title="Guruhni o'chirish"
+            onClick={deleteGroup}
+          >
             <Trash2 size={18} />
           </button>
         </div>
       </header>
 
       {/* TABS */}
-      <nav className={s.tabs}>
-        <button 
-          className={`${s.tab} ${mainTab === 'info' ? s.activeTab : ''}`} 
+      <nav className="flex gap-1.5 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl w-fit border border-slate-200/50 dark:border-slate-805/50">
+        <button
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${mainTab === 'info' ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/50 dark:border-slate-705/50' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-850'}`}
           onClick={() => handleMainTabChange('info')}
         >
           Ma'lumotlar
         </button>
-        <button 
-          className={`${s.tab} ${mainTab === 'lessons' ? s.activeTab : ''}`} 
+        <button
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${mainTab === 'lessons' ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/50 dark:border-slate-705/50' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-850'}`}
           onClick={() => handleMainTabChange('lessons')}
         >
           Guruh darsliklari
         </button>
-        <button 
-          className={`${s.tab} ${mainTab === 'attendance' ? s.activeTab : ''}`} 
+        <button
+          className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${mainTab === 'attendance' ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/50 dark:border-slate-705/50' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-850'}`}
           onClick={() => handleMainTabChange('attendance')}
         >
           Akademik davomati
@@ -948,87 +955,79 @@ export default function GroupDetail({ groupId }) {
 
       {/* INFO TAB */}
       {mainTab === 'info' && (
-        <section className={s.infoGrid}>
-          <article className={s.card}>
-            <div className={`${s.cardHeader} ${s.purpleHeader}`}>
-              <h3>Guruh mentorlari</h3>
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <article className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+            <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider border-b border-slate-50 dark:border-slate-850 pb-2">Guruh mentorlari</div>
+            <div className="flex flex-col gap-3.5">
+              {Array.isArray(group.teachers) && group.teachers.length > 0 ? group.teachers.map(teacher => {
+                const teacherName = teacher.name || teacher.full_name || "Noma'lum"
+                return (
+                  <div key={teacher.id || teacherName} className="flex items-center gap-3.5 p-3.5 bg-slate-50/50 dark:bg-slate-950/10 border border-slate-100/50 dark:border-slate-800/40 rounded-xl">
+                    <div className="w-11 h-11 rounded-full bg-violet-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">{getInitials(teacherName)}</div>
+                    <div>
+                      <div className="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500">Teacher</div>
+                      <strong className="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5 block">{teacherName}</strong>
+                    </div>
+                  </div>
+                )
+              }) : (
+                <div className="text-sm text-slate-400 dark:text-slate-505 font-medium py-3 text-center">Mentorlar yo'q</div>
+              )}
             </div>
-            <div className={`${s.cardBodyWrapper} ${s.open}`}>
-              <div className={s.cardBody}>
-                <div className={s.mentorsList}>
-                  {Array.isArray(group.teachers) && group.teachers.length > 0 ? group.teachers.map(teacher => {
-                    const teacherName = teacher.name || teacher.full_name || "Noma'lum"
-                    return (
-                      <div key={teacher.id || teacherName} className={s.mentorItem}>
-                        <div className={s.mentorAvatar}>{getInitials(teacherName)}</div>
-                        <div className={s.mentorRole}>Teacher</div>
-                        <span className={s.mentorName}>{teacherName}</span>
-                      </div>
-                    )
-                  }) : (
-                    <div style={{ color: 'var(--muted)', textAlign: 'center', width: '100%' }}>Mentorlar yo'q</div>
-                  )}
-                </div>
+          </article>
+
+          <article className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+            <div className="text-xs font-bold text-slate-400 dark:text-slate-505 uppercase tracking-wider border-b border-slate-50 dark:border-slate-850 pb-2">Parametrlar</div>
+            <div className="flex flex-col gap-3 text-sm">
+              <div className="flex justify-between items-center border-b border-slate-100/50 dark:border-slate-800/40 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">Kurs:</span>
+                <strong className="text-slate-800 dark:text-slate-200 font-bold">{getCourseName(group)}</strong>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-100/50 dark:border-slate-800/40 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">O'rtacha yosh:</span>
+                <strong className="text-slate-800 dark:text-slate-200 font-bold">{group.avg_age || '-'}</strong>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-100/50 dark:border-slate-800/40 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">O'quvchilar sig'imi:</span>
+                <strong className="text-slate-800 dark:text-slate-200 font-bold">{group.student_limit || '-'}</strong>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-100/50 dark:border-slate-800/40 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">Mavjud o'quvchilar:</span>
+                <strong className="text-slate-800 dark:text-slate-200 font-bold">{students.length || group.students_count || 0}</strong>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-100/50 dark:border-slate-800/40 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">Ochilgan sana:</span>
+                <strong className="text-slate-800 dark:text-slate-200 font-bold">{getOpenedDate(group)}</strong>
+              </div>
+              <div className="flex justify-between items-center border-b border-slate-100/50 dark:border-slate-800/40 pb-2 last:border-0 last:pb-0">
+                <span className="text-slate-500 dark:text-slate-400 font-medium flex-shrink-0">Dars jadvali:</span>
+                <strong className="text-slate-800 dark:text-slate-200 font-bold text-right ml-4">{getScheduleSummary()}</strong>
               </div>
             </div>
           </article>
 
-          <article className={s.card}>
-            <div className={s.cardHeader}>
-              <h3>Parametrlar</h3>
-            </div>
-            <div className={`${s.cardBodyWrapper} ${s.open}`}>
-              <div className={s.cardBody}>
-                <div className={s.paramRow}>
-                  <span>Kurs:</span>
-                  <strong>{getCourseName(group)}</strong>
-                </div>
-                <div className={s.paramRow}>
-                  <span>O'rtacha yosh:</span>
-                  <strong>{group.avg_age || '-'}</strong>
-                </div>
-                <div className={s.paramRow}>
-                  <span>O'quvchilar sig'imi:</span>
-                  <strong>{group.student_limit || '-'}</strong>
-                </div>
-                <div className={s.paramRow}>
-                  <span>Mavjud o'quvchilar:</span>
-                  <strong>{students.length || group.students_count || 0}</strong>
-                </div>
-                <div className={s.paramRow}>
-                  <span>Ochilgan sana:</span>
-                  <strong>{getOpenedDate(group)}</strong>
-                </div>
-                <div className={s.paramRow}>
-                  <span>Dars jadvali:</span>
-                  <strong>{getScheduleSummary()}</strong>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article className={s.scheduleCard} style={{ gridColumn: 'span 2' }}>
-            <h2>Dars jadvali</h2>
-            <div className={s.scheduleList}>
+          <article className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-4 col-span-1 lg:col-span-3">
+            <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider border-b border-slate-50 dark:border-slate-850 pb-2">Dars jadvali</div>
+            <div className="flex flex-col gap-2.5">
               {(schedules.length > 0 ? schedules : [{ id: 'fallback', teacher: 'Teacher', day: group.week_day || group.days, startTime: group.start_time || group.time, endTime: group.end_time, room: group.room_name || '-' }]).map(item => (
-                <div key={item.id} className={s.scheduleRow}>
-                  <strong className={s.schedTeacher}>{item.teacher}</strong>
-                  <span className={s.schedDays}>{formatScheduleDay(item.day)}</span>
-                  <span className={s.schedTime}>{item.startTime || '-'} dan {item.endTime || '-'} gacha</span>
-                  <span className={s.schedPeriod}>{[item.startDate && formatDate(item.startDate), item.endDate && formatDate(item.endDate)].filter(Boolean).join(' - ') || '-'}</span>
-                  <span className={s.schedRoom}>{item.room}</span>
+                <div key={item.id} className="grid grid-cols-1 sm:grid-cols-5 gap-3 p-4 bg-slate-50/50 dark:bg-slate-955/10 border border-slate-100/50 dark:border-slate-800/40 rounded-xl text-sm text-slate-650 dark:text-slate-350 items-center">
+                  <strong className="text-slate-900 dark:text-white font-bold">{item.teacher}</strong>
+                  <span className="font-semibold text-violet-650 dark:text-violet-400">{formatScheduleDay(item.day)}</span>
+                  <span className="font-medium">{item.startTime || '-'} dan {item.endTime || '-'} gacha</span>
+                  <span>{[item.startDate && formatDate(item.startDate), item.endDate && formatDate(item.endDate)].filter(Boolean).join(' - ') || '-'}</span>
+                  <span className="font-semibold">{item.room}</span>
                 </div>
               ))}
             </div>
-            <div className={s.calendarRow}>
+            <div className="flex gap-2 overflow-x-auto pb-2 mt-4 scrollbar-none">
               {lessonDays.map((day, index) => (
-                <button 
-                  key={`${day.value}-${index}`} 
-                  className={`${s.calChip} ${index === selectedMonth ? s.chipActive : day.completed ? s.chipDone : ''}`} 
+                <button
+                  key={`${day.value}-${index}`}
+                  className={`flex flex-col items-center justify-center p-2.5 rounded-xl border min-w-[56px] transition-all cursor-pointer ${index === selectedMonth ? 'bg-violet-600 border-violet-600 text-white shadow-md shadow-violet-600/10' : day.completed ? 'bg-slate-55/60 dark:bg-slate-800/40 border-slate-150 dark:border-slate-800 text-slate-400 dark:text-slate-500' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
                   onClick={() => handleLessonDaySelect(day, index, true)}
                 >
-                  <span>{day.month}</span>
-                  <strong>{day.day}</strong>
+                  <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">{day.month}</span>
+                  <strong className="text-base font-extrabold mt-0.5">{day.day}</strong>
                 </button>
               ))}
             </div>
@@ -1038,56 +1037,62 @@ export default function GroupDetail({ groupId }) {
 
       {/* LESSONS TAB */}
       {mainTab === 'lessons' && (
-        <section className={s.lessonsSection}>
-          <div className={s.lessonsHeader}>
-            <div className={s.lessonsHeaderLeft}>
-              <h2>Guruh darsliklari</h2>
-              <div className={s.subTabs}>
+        <section className="flex flex-col gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-4 border-b border-slate-105 dark:border-slate-800 pb-4">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Guruh darsliklari</h2>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex gap-1 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl w-fit border border-slate-205/50 dark:border-slate-800/50">
                 {lessonTabs.map(tab => (
-                  <button 
-                    key={tab.id} 
-                    className={`${s.subTab} ${lessonTab === tab.id ? s.activeSubTab : ''}`} 
+                  <button
+                    key={tab.id}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${lessonTab === tab.id ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200/50 dark:border-slate-700/50' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-205/50 dark:hover:bg-slate-850'}`}
                     onClick={() => handleLessonTabChange(tab.id)}
                   >
                     {tab.label}
                   </button>
                 ))}
               </div>
+
+              {lessonTab === 'videos' && canManageHomework && (
+                <button
+                  className="inline-flex items-center justify-center bg-violet-600 hover:bg-violet-700 text-white gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition-all duration-250 shadow-md shadow-violet-600/10 cursor-pointer"
+                  onClick={openVideoModal}
+                >
+                  <Upload size={14} />
+                  Fayl yuklash
+                </button>
+              )}
+              {lessonTab === 'homework' && canManageHomework && (
+                <button
+                  className="inline-flex items-center justify-center bg-violet-600 hover:bg-violet-700 text-white gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition-all duration-250 shadow-md shadow-violet-600/10 cursor-pointer"
+                  onClick={openHomeworkInNewWindow}
+                >
+                  <Plus size={14} />
+                  Yangi uy vazifa
+                </button>
+              )}
+              {lessonTab === 'exams' && (
+                <button className="inline-flex items-center justify-center bg-violet-600 hover:bg-violet-700 text-white gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition-all duration-250 shadow-md shadow-violet-600/10 cursor-pointer">
+                  Yangi imtihon
+                </button>
+              )}
             </div>
-            
-            {lessonTab === 'videos' && canManageHomework && (
-              <button className={s.addBtn} onClick={openVideoModal}>
-                <Upload size={14} />
-                Fayl yuklash
-              </button>
-            )}
-            {lessonTab === 'homework' && canManageHomework && (
-              <button className={s.addBtn} onClick={openHomeworkInNewWindow}>
-                <Plus size={14} />
-                Yangi uy vazifa
-              </button>
-            )}
-            {lessonTab === 'exams' && (
-              <button className={s.addBtn}>
-                Yangi imtihon
-              </button>
-            )}
           </div>
 
           {/* HOMEWORK SUB-TAB */}
           {lessonTab === 'homework' && (
-            <div className={s.hwGrid}>
-              <div className={s.hwPanel}>
-                <div className={s.panelTitle}>
-                  <span>{getGroupName()}</span> 
-                  <span style={{ opacity: 0.5 }}>/</span> 
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="col-span-1 lg:col-span-2 flex flex-col gap-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm">
+                <div className="text-xs font-bold text-slate-450 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-50 dark:border-slate-850 pb-2">
+                  <span>{getGroupName()}</span>
+                  <span className="opacity-50">/</span>
                   <span>Uyga vazifa</span>
                 </div>
-                
-                <div className={s.hwFilterRow}>
-                  <select 
-                    className={s.select}
-                    value={selectedHomeworkId} 
+
+                <div className="flex flex-wrap gap-2.5 items-center">
+                  <select
+                    className="rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-semibold focus:border-violet-500 focus:outline-none dark:text-white cursor-pointer"
+                    value={selectedHomeworkId}
                     onChange={e => {
                       const nextHomeworkId = e.target.value
                       setSelectedHomeworkId(nextHomeworkId)
@@ -1100,10 +1105,10 @@ export default function GroupDetail({ groupId }) {
                       <option key={item.id} value={item.id}>{item.title}</option>
                     ))}
                   </select>
-                  
-                  <select 
-                    className={s.select}
-                    value={homeworkStatus} 
+
+                  <select
+                    className="rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-semibold focus:border-violet-500 focus:outline-none dark:text-white cursor-pointer"
+                    value={homeworkStatus}
                     onChange={e => {
                       const nextStatus = e.target.value
                       setHomeworkStatus(nextStatus)
@@ -1117,40 +1122,45 @@ export default function GroupDetail({ groupId }) {
                     <option value="ACCEPTED">Qabul qilingan</option>
                     <option value="REJECTED">Rad etilgan</option>
                   </select>
-                  
-                  <button className={s.filterBtn} onClick={() => loadHomeworkResults()}>
+
+                  <button className="inline-flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer" onClick={() => loadHomeworkResults()}>
                     <Eye size={14} />
                     Natijalar
                   </button>
                 </div>
 
-                <div className={s.statsRow}>
-                  <div className={s.miniStat}>
-                    <span>Topshirgan</span>
-                    <strong>{submittedCount}</strong>
+                <div className="grid grid-cols-3 gap-3 my-1">
+                  <div className="flex flex-col gap-0.5 p-3 bg-slate-50/50 dark:bg-slate-950/15 border border-slate-100/50 dark:border-slate-800/40 rounded-xl text-center">
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-550 uppercase tracking-wider">Topshirgan</span>
+                    <strong className="text-lg font-extrabold text-slate-850 dark:text-white">{submittedCount}</strong>
                   </div>
-                  <div className={s.miniStat}>
-                    <span>Topshirmagan</span>
-                    <strong>{notSubmittedRows.length}</strong>
+                  <div className="flex flex-col gap-0.5 p-3 bg-slate-50/50 dark:bg-slate-955/15 border border-slate-100/50 dark:border-slate-800/40 rounded-xl text-center">
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-555 uppercase tracking-wider">Topshirmagan</span>
+                    <strong className="text-lg font-extrabold text-slate-850 dark:text-white">{notSubmittedRows.length}</strong>
                   </div>
-                  <div className={s.miniStat}>
-                    <span>Kutmoqda</span>
-                    <strong>{pendingCount}</strong>
+                  <div className="flex flex-col gap-0.5 p-3 bg-slate-50/50 dark:bg-slate-955/15 border border-slate-100/50 dark:border-slate-800/40 rounded-xl text-center">
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-555 uppercase tracking-wider">Kutmoqda</span>
+                    <strong className="text-lg font-extrabold text-slate-850 dark:text-white">{pendingCount}</strong>
                   </div>
                 </div>
 
                 {loadingHomework ? (
-                  <div style={{ textAlign: 'center', color: 'var(--muted)' }}>Uy vazifalar yuklanmoqda...</div>
+                  <div className="text-center py-8 text-sm text-slate-400 dark:text-slate-500 font-medium">Uy vazifalar yuklanmoqda...</div>
                 ) : homeworks.length > 0 ? (
-                  <div className={s.hwList}>
+                  <div className="flex flex-col gap-3">
                     {homeworks.map(item => (
-                      <article key={item.id || item.title} className={s.hwItem}>
-                        <h3 className={s.hwItemTitle}>{item.title}</h3>
-                        <p className={s.hwItemDesc}>{item.description || "Tavsif yo'q"}</p>
-                        <div className={s.hwItemMeta}>
+                      <article key={item.id || item.title} className="p-4 bg-slate-50/50 dark:bg-slate-955/10 border border-slate-100 dark:border-slate-800/60 rounded-xl flex flex-col gap-2.5">
+                        <div className="flex justify-between items-start">
+                          <h3 className="font-bold text-slate-900 dark:text-white text-sm">{item.title}</h3>
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                            Lesson #{item.lessonId || '-'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-600 dark:text-slate-350 leading-relaxed">{item.description || "Tavsif yo'q"}</p>
+                        <div className="flex justify-between items-center border-t border-slate-100 dark:border-slate-850/80 pt-3 mt-1.5 text-xs text-slate-450 dark:text-slate-500 font-medium">
                           <span>Muddat: {formatDate(item.deadline)}</span>
                           {item.fileUrl && (
-                            <a href={item.fileUrl} target="_blank" rel="noreferrer" className={s.viewBtn}>
+                            <a href={item.fileUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300 font-semibold cursor-pointer">
                               <Download size={14} />
                               Fayl
                             </a>
@@ -1160,15 +1170,15 @@ export default function GroupDetail({ groupId }) {
                     ))}
                   </div>
                 ) : (
-                  <div style={{ textAlign: 'center', color: 'var(--muted)' }}>Bu guruh uchun uy vazifa topilmadi.</div>
+                  <div className="text-center py-8 text-sm text-slate-400 dark:text-slate-500 font-medium">Bu guruh uchun uy vazifa topilmadi.</div>
                 )}
 
                 {ownHomework && (
-                  <div className={s.miniStat} style={{ alignItems: 'flex-start', padding: 12 }}>
-                    <span style={{ color: '#7c3aed' }}>Talaba uchun dars bo'yicha vazifa:</span>
-                    <strong style={{ fontSize: 14, marginTop: 4 }}>{ownHomework.title || ownHomework.name || 'Uyga vazifa'}</strong>
+                  <div className="p-4 bg-violet-50/30 dark:bg-violet-955/10 border border-violet-100 dark:border-violet-900/30 rounded-xl flex flex-col gap-2.5">
+                    <strong className="text-xs font-bold text-violet-750 dark:text-violet-300">Talaba uchun dars bo'yicha vazifa:</strong>
+                    <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{ownHomework.title || ownHomework.name || 'Uyga vazifa'}</span>
                     {(ownHomework.fileUrl || ownHomework.file_url || ownHomework.url) && (
-                      <a href={ownHomework.fileUrl || ownHomework.file_url || ownHomework.url} target="_blank" rel="noreferrer" className={s.viewBtn} style={{ marginTop: 8 }}>
+                      <a href={ownHomework.fileUrl || ownHomework.file_url || ownHomework.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-violet-600 hover:text-violet-700 w-fit cursor-pointer">
                         <Download size={14} />
                         Yuklab olish
                       </a>
@@ -1179,26 +1189,26 @@ export default function GroupDetail({ groupId }) {
 
               {/* CREATE HOMEWORK FORM */}
               {canManageHomework && (
-                <form className={s.hwPanel} onSubmit={handleHomeworkSubmit}>
-                  <div className={s.panelTitle}>
-                    <Plus size={16} /> 
+                <form className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-4 h-fit" onSubmit={handleHomeworkSubmit}>
+                  <div className="text-xs font-bold text-slate-400 dark:text-slate-505 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-50 dark:border-slate-850 pb-2">
+                    <Plus size={16} />
                     <span>Yangi uy vazifa</span>
                   </div>
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Nomi <span className={s.req}>*</span></span>
-                    <input 
-                      className={s.input}
-                      value={homeworkForm.title} 
-                      onChange={e => setHomeworkForm(prev => ({ ...prev, title: e.target.value }))} 
-                      placeholder="Masalan: React props mashqi" 
-                      required 
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Nomi <span className="text-rose-500">*</span></span>
+                    <input
+                      className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:ring-1 focus:ring-violet-500 focus:outline-none dark:text-white transition-all"
+                      value={homeworkForm.title}
+                      onChange={e => setHomeworkForm(prev => ({ ...prev, title: e.target.value }))}
+                      placeholder="Masalan: React props mashqi"
+                      required
                     />
                   </label>
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Dars</span>
-                    <select 
-                      className={s.formSelect}
-                      value={homeworkForm.lessonId} 
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Dars</span>
+                    <select
+                      className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all cursor-pointer"
+                      value={homeworkForm.lessonId}
                       onChange={e => setHomeworkForm(prev => ({ ...prev, lessonId: e.target.value }))}
                     >
                       <option value="">Darsni tanlang</option>
@@ -1207,27 +1217,27 @@ export default function GroupDetail({ groupId }) {
                       ))}
                     </select>
                   </label>
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Muddat</span>
-                    <input 
-                      type="date" 
-                      className={s.input}
-                      value={homeworkForm.deadline} 
-                      onChange={e => setHomeworkForm(prev => ({ ...prev, deadline: e.target.value }))} 
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Muddat</span>
+                    <input
+                      type="date"
+                      className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all cursor-pointer"
+                      value={homeworkForm.deadline}
+                      onChange={e => setHomeworkForm(prev => ({ ...prev, deadline: e.target.value }))}
                     />
                   </label>
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Tavsif</span>
-                    <textarea 
-                      className={s.textarea}
-                      value={homeworkForm.description} 
-                      onChange={e => setHomeworkForm(prev => ({ ...prev, description: e.target.value }))} 
-                      placeholder="Vazifa matni..." 
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tavsif</span>
+                    <textarea
+                      className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all h-20"
+                      value={homeworkForm.description}
+                      onChange={e => setHomeworkForm(prev => ({ ...prev, description: e.target.value }))}
+                      placeholder="Vazifa matni..."
                     />
                   </label>
-                  <button 
-                    className={s.submitBtn}
-                    type="submit" 
+                  <button
+                    className="inline-flex items-center justify-center bg-violet-600 hover:bg-violet-700 text-white gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 shadow-md shadow-violet-600/10 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                    type="submit"
                     disabled={savingHomework || !homeworkForm.title.trim()}
                   >
                     {savingHomework ? 'Saqlanmoqda...' : "Qo'shish"}
@@ -1236,33 +1246,33 @@ export default function GroupDetail({ groupId }) {
               )}
 
               {/* SUBMISSIONS TABLE */}
-              <div className={`${s.tableWrap} ${s.hwGrid}`} style={{ gridColumn: 'span 3' }}>
-                <table className={s.table}>
+              <div className="col-span-1 lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-x-auto w-full">
+                <table className="w-full text-left border-collapse min-w-[700px]">
                   <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>O'quvchi</th>
-                      <th>Status</th>
-                      <th>Baho</th>
-                      <th>Topshirgan vaqti</th>
-                      <th></th>
+                    <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                      <th className="px-5 py-4 font-semibold text-xs tracking-wider">#</th>
+                      <th className="px-5 py-4 font-semibold text-xs tracking-wider">O'quvchi</th>
+                      <th className="px-5 py-4 font-semibold text-xs tracking-wider">Status</th>
+                      <th className="px-5 py-4 font-semibold text-xs tracking-wider">Baho</th>
+                      <th className="px-5 py-4 font-semibold text-xs tracking-wider">Topshirgan vaqti</th>
+                      <th className="px-5 py-4 font-semibold text-xs tracking-wider"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {visibleHomeworkRows.length > 0 ? visibleHomeworkRows.map((row, index) => (
-                      <tr key={row.id || index}>
-                        <td>{index + 1}</td>
-                        <td style={{ fontWeight: 600 }}>{row.studentName}</td>
-                        <td>
-                          <span className={`${s.badge} ${normalizeResultStatus(row.status) === 'NOT_SUBMITTED' || normalizeResultStatus(row.status) === 'REJECTED' ? s.red : s.green}`}>
+                      <tr key={row.id || index} className="hover:bg-slate-50/40 dark:hover:bg-slate-800/20 border-b border-slate-100 dark:border-slate-850/60 transition-colors">
+                        <td className="px-5 py-4 text-xs font-bold text-slate-400">{index + 1}</td>
+                        <td className="px-5 py-4 font-semibold text-slate-800 dark:text-slate-200">{row.studentName}</td>
+                        <td className="px-5 py-4">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${normalizeResultStatus(row.status) === 'NOT_SUBMITTED' || normalizeResultStatus(row.status) === 'REJECTED' ? 'bg-rose-50 dark:bg-rose-955/20 text-rose-600 dark:text-rose-400' : 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400'}`}>
                             {getHomeworkStatusLabel(row.status)}
                           </span>
                         </td>
-                        <td style={{ fontWeight: 700 }}>{row.grade}</td>
-                        <td>{formatDate(row.submittedAt)}</td>
-                        <td>
-                          <button 
-                            className={s.viewBtn}
+                        <td className="px-5 py-4 font-bold text-slate-800 dark:text-slate-205">{row.grade}</td>
+                        <td className="px-5 py-4 text-xs font-medium text-slate-500 dark:text-slate-400">{formatDate(row.submittedAt)}</td>
+                        <td className="px-5 py-4 text-right">
+                          <button
+                            className="inline-flex items-center gap-1 text-violet-650 hover:text-violet-750 dark:text-violet-400 dark:hover:text-violet-300 font-bold cursor-pointer text-xs"
                             onClick={() => {
                               setCheckForm(prev => ({ ...prev, studentId: row.studentId || '' }))
                               if (normalizeResultStatus(row.status) === 'NOT_SUBMITTED') {
@@ -1280,7 +1290,7 @@ export default function GroupDetail({ groupId }) {
                       </tr>
                     )) : (
                       <tr>
-                        <td colSpan="6" className={s.tableEmpty}>Natijalar topilmadi.</td>
+                        <td colSpan="6" className="text-center py-8 text-sm text-slate-450 dark:text-slate-500 font-medium">Natijalar topilmadi.</td>
                       </tr>
                     )}
                   </tbody>
@@ -1289,85 +1299,87 @@ export default function GroupDetail({ groupId }) {
 
               {/* GRADING FORM */}
               {canManageHomework && selectedResult && (
-                <form className={s.gradingForm} style={{ gridColumn: 'span 3' }} onSubmit={handleHomeworkCheck}>
-                  <div className={s.panelTitle}>
-                    <button type="button" className={s.viewBtn} onClick={() => setSelectedResult(null)}>Kutayotganlar</button>
-                    <span style={{ opacity: 0.5 }}>/</span>
-                    <strong style={{ color: 'var(--text)' }}>Uyga vazifa</strong>
+                <form className="col-span-1 lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-5" onSubmit={handleHomeworkCheck}>
+                  <div className="text-sm font-semibold text-slate-500 dark:text-slate-450 flex items-center gap-1.5 border-b border-slate-150 dark:border-slate-800 pb-3">
+                    <button type="button" className="hover:text-violet-600 transition-colors cursor-pointer" onClick={() => setSelectedResult(null)}>Kutayotganlar</button>
+                    <span className="opacity-50">/</span>
+                    <strong className="text-slate-900 dark:text-white">Uyga vazifa</strong>
                   </div>
 
-                  <div className={s.gradingGrid}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                      <section className={s.miniStat} style={{ alignItems: 'flex-start', padding: 16 }}>
-                        <h2 className={s.label}>Uy vazifasi tavsifi</h2>
-                        <p style={{ fontSize: 13, marginTop: 6 }}>{selectedHomework?.description || "Izoh yo'q"}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="flex flex-col gap-4">
+                      <section className="flex flex-col gap-2.5 bg-slate-50/50 dark:bg-slate-955/10 border border-slate-100/50 dark:border-slate-800/40 p-4 rounded-2xl">
+                        <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider">Uy vazifasi tavsifi</h2>
+                        <div className="text-xs text-slate-600 dark:text-slate-350 leading-relaxed font-medium">
+                          <p>{selectedHomework?.description || "Izoh yo'q"}</p>
+                        </div>
                       </section>
 
-                      <section className={s.miniStat} style={{ alignItems: 'flex-start', padding: 16 }}>
-                        <h2 className={s.label}>{selectedResult.studentName || "O'quvchi"}</h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 12, marginTop: 8 }}>
-                          <div>Vaqti: <strong>{formatDate(selectedResult.submittedAt)}</strong></div>
-                          <div>Fayllar soni: <strong>{selectedResultFiles.length || (selectedResult.fileUrl ? 1 : 0)}</strong></div>
-                          <div>Status: 
-                            <span className={`${s.badge} ${s.yellow}`} style={{ marginLeft: 8 }}>
+                      <section className="flex flex-col gap-3.5 bg-slate-50/50 dark:bg-slate-955/10 border border-slate-100/50 dark:border-slate-800/40 p-4 rounded-2xl">
+                        <h2 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider">{selectedResult.studentName || "O'quvchi"}</h2>
+                        <div className="grid grid-cols-2 gap-3 text-xs font-semibold text-slate-550 dark:text-slate-400">
+                          <div>Vaqti: <strong className="text-slate-800 dark:text-slate-200 ml-1">{formatDate(selectedResult.submittedAt)}</strong></div>
+                          <div>Fayllar soni: <strong className="text-slate-800 dark:text-slate-200 ml-1">{selectedResultFiles.length || (selectedResult.fileUrl ? 1 : 0)}</strong></div>
+                          <div className="col-span-2 mt-1">Status:
+                            <strong className="inline-flex items-center px-2 py-0.5 rounded bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-900/20 uppercase tracking-wide text-[10px] ml-2">
                               {getHomeworkStatusLabel(selectedResult.status)}
-                            </span>
+                            </strong>
                           </div>
                         </div>
-                        
-                        <div style={{ marginTop: 12, borderTop: '1px solid var(--border)', paddingTop: 12, width: '100%' }}>
-                          <strong className={s.label}>Topshirilgan fayl:</strong>
-                          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+
+                        <div className="flex flex-col gap-2 mt-2 border-t border-slate-100 dark:border-slate-850 pt-3">
+                          <strong className="text-xs text-slate-450 dark:text-slate-500 uppercase tracking-wider font-semibold">Topshirilgan fayl:</strong>
+                          <div className="flex flex-wrap gap-2">
                             {(selectedResultFiles.length > 0 ? selectedResultFiles : [selectedResult.fileUrl].filter(Boolean)).map((file, index) => (
-                              <a key={`${file}-${index}`} href={file} target="_blank" rel="noreferrer" className={s.cancelBtn} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                              <a key={`${file}-${index}`} href={file} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer">
                                 <Download size={14} />
                                 Fayl {index + 1}
                               </a>
                             ))}
                           </div>
                           {selectedResult.homeworkComment && (
-                            <div className={s.infoBox} style={{ marginTop: 12 }}>
+                            <div className="text-xs text-slate-500 dark:text-slate-400 mt-2 bg-slate-100 dark:bg-slate-850 p-2.5 rounded-lg border border-slate-200/50 dark:border-slate-800/30 leading-relaxed font-medium">
                               <span>O'quvchi izohi:</span>
-                              <p style={{ fontWeight: 600, marginTop: 4 }}>{selectedResult.homeworkComment}</p>
+                              <p className="mt-1 text-slate-700 dark:text-slate-300 font-semibold">{selectedResult.homeworkComment}</p>
                             </div>
                           )}
                         </div>
                       </section>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                      <section className={s.miniStat} style={{ alignItems: 'flex-start', padding: 16 }}>
-                        <div className={s.infoBox}>
-                          <Info size={16} style={{ flexShrink: 0 }} />
+                    <div className="flex flex-col gap-4">
+                      <section className="flex flex-col gap-4 bg-slate-50/50 dark:bg-slate-955/10 border border-slate-100/50 dark:border-slate-800/40 p-4 rounded-2xl">
+                        <div className="flex items-start gap-2.5 p-3.5 bg-blue-50/50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 rounded-xl text-xs font-semibold leading-relaxed border border-blue-100/30">
+                          <Info size={16} className="mt-0.5 flex-shrink-0" />
                           <span>60-100 oralig'ida ball qo'yilgan vazifa 'Qabul qilingan', 0-59 oralig'ida ball qo'yilgan vazifa 'Qaytarilgan' hisoblanadi.</span>
                         </div>
-                        
-                        <label className={s.formGroup} style={{ width: '100%', marginTop: 12 }}>
-                          <span className={s.label}>Ball</span>
-                          <div className={s.rangeRow}>
-                            <input type="range" min="0" max="100" value={selectedGrade} onChange={e => handleGradeChange(e.target.value)} />
-                            <input type="number" min="0" max="100" value={checkForm.grade} onChange={e => handleGradeChange(e.target.value)} placeholder="60" />
+
+                        <label className="flex flex-col gap-1.5 w-full">
+                          <span className="text-xs font-bold text-slate-505 dark:text-slate-400 uppercase tracking-wider">Ball</span>
+                          <div className="flex items-center gap-4">
+                            <input type="range" min="0" max="100" className="w-full accent-violet-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none" value={selectedGrade} onChange={e => handleGradeChange(e.target.value)} />
+                            <input type="number" min="0" max="100" className="w-20 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-center focus:border-violet-500 focus:outline-none dark:text-white font-bold" value={checkForm.grade} onChange={e => handleGradeChange(e.target.value)} placeholder="60" />
                           </div>
-                          <small style={{ color: 'var(--muted)', fontSize: 10 }}>O'tish bali: 60</small>
+                          <small className="text-[10px] text-slate-400 font-medium">O'tish bali: 60</small>
                         </label>
-                        
-                        <label className={s.formGroup} style={{ width: '100%' }}>
-                          <span className={s.label}>Status</span>
-                          <select className={s.formSelect} value={checkForm.status} onChange={e => setCheckForm(prev => ({ ...prev, status: e.target.value }))}>
+
+                        <label className="flex flex-col gap-1.5 w-full">
+                          <span className="text-xs font-bold text-slate-505 dark:text-slate-400 uppercase tracking-wider">Status</span>
+                          <select className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white cursor-pointer" value={checkForm.status} onChange={e => setCheckForm(prev => ({ ...prev, status: e.target.value }))}>
                             <option value="ACCEPTED">Qabul qilingan</option>
                             <option value="REJECTED">Qaytarilgan</option>
                             <option value="PENDING">Kutmoqda</option>
                           </select>
                         </label>
-                        
-                        <label className={s.formGroup} style={{ width: '100%' }}>
-                          <span className={s.label}>Izoh</span>
-                          <textarea className={s.textarea} value={checkForm.comment} onChange={e => setCheckForm(prev => ({ ...prev, comment: e.target.value }))} placeholder="Izohingiz" />
+
+                        <label className="flex flex-col gap-1.5 w-full">
+                          <span className="text-xs font-bold text-slate-505 dark:text-slate-400 uppercase tracking-wider">Izoh</span>
+                          <textarea className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all h-20" value={checkForm.comment} onChange={e => setCheckForm(prev => ({ ...prev, comment: e.target.value }))} placeholder="Izohingiz" />
                         </label>
-                        
-                        <div className={s.gradingActions} style={{ width: '100%' }}>
-                          <button type="button" className={s.cancelBtn} onClick={() => setSelectedResult(null)}>Bekor qilish</button>
-                          <button className={s.primaryBtn} type="submit" disabled={checkingHomework || !selectedHomeworkId || !checkForm.studentId}>
+
+                        <div className="flex gap-3 justify-end border-t border-slate-100 dark:border-slate-850 pt-4 mt-2">
+                          <button type="button" className="px-4 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-705 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer" onClick={() => setSelectedResult(null)}>Bekor qilish</button>
+                          <button className="px-5 py-2 rounded-xl text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white shadow-md shadow-violet-600/10 cursor-pointer" type="submit" disabled={checkingHomework || !selectedHomeworkId || !checkForm.studentId}>
                             {checkingHomework ? 'Yuborilmoqda...' : 'Yuborish'}
                           </button>
                         </div>
@@ -1381,58 +1393,58 @@ export default function GroupDetail({ groupId }) {
 
           {/* VIDEOS SUB-TAB */}
           {lessonTab === 'videos' && (
-            <div className={s.tableWrap}>
-              <table className={s.table}>
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-x-auto w-full">
+              <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Fayl nomi</th>
-                    <th>Dars nomi</th>
-                    <th>Turi</th>
-                    <th>Hajmi</th>
-                    <th>Yuklangan vaqti</th>
-                    <th></th>
+                  <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-105 dark:border-slate-800">
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">#</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Fayl nomi</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Dars nomi</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Turi</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Hajmi</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Yuklangan vaqti</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider"></th>
                   </tr>
                 </thead>
                 <tbody>
                   {loadingFiles ? (
                     <tr>
-                      <td colSpan="7" className={s.tableEmpty}>Fayllar yuklanmoqda...</td>
+                      <td colSpan="7" className="text-center py-8 text-sm text-slate-400 dark:text-slate-500 font-medium">Fayllar yuklanmoqda...</td>
                     </tr>
                   ) : videoRows.length > 0 ? videoRows.map((row, index) => (
-                    <tr key={row.id || index}>
-                      <td>{index + 1}</td>
-                      <td>
+                    <tr key={row.id || index} className="hover:bg-slate-50/40 dark:hover:bg-slate-800/20 border-b border-slate-100 dark:border-slate-850/60 transition-colors">
+                      <td className="px-5 py-4 text-xs font-bold text-slate-400">{index + 1}</td>
+                      <td className="px-5 py-4">
                         {row.url ? (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                          <div className="flex items-center gap-3">
                             {isVideoFile(row) && (
-                              <button className={s.viewBtn} type="button" onClick={() => setPreviewVideo(row)}>
+                              <button className="inline-flex items-center gap-1.5 text-violet-650 hover:text-violet-750 dark:text-violet-400 dark:hover:text-violet-350 font-bold cursor-pointer text-xs" type="button" onClick={() => setPreviewVideo(row)}>
                                 <PlayCircle size={15} />
                                 Ko'rish
                               </button>
                             )}
-                            <a className={s.viewBtn} style={{ color: 'var(--text)' }} href={row.url} target="_blank" rel="noreferrer">
+                            <a className="inline-flex items-center gap-1.5 text-slate-700 hover:text-violet-600 dark:text-slate-300 dark:hover:text-violet-400 font-semibold cursor-pointer text-xs" href={row.url} target="_blank" rel="noreferrer">
                               <Download size={14} />
                               {row.name || 'Fayl'}
                             </a>
                           </div>
                         ) : (
-                          <span style={{ color: 'var(--muted)', display: 'inline-flex', alignItems: 'center', gap: 6 }}><PlayCircle size={15} /> {row.name || row.topic || 'Fayl'}</span>
+                          <span className="inline-flex items-center gap-1.5 text-slate-500 text-xs font-medium"><PlayCircle size={15} /> {row.name || row.topic || 'Fayl'}</span>
                         )}
                       </td>
-                      <td style={{ fontWeight: 600 }}>{row.lessonName || row.topic || '-'}</td>
-                      <td>
-                        <span className={`${s.badge} ${s.gray}`}>
+                      <td className="px-5 py-4 font-semibold text-slate-800 dark:text-slate-205">{row.lessonName || row.topic || '-'}</td>
+                      <td className="px-5 py-4">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
                           {row.type || '-'}
                         </span>
                       </td>
-                      <td style={{ fontWeight: 600 }}>{formatFileSize(row.size)}</td>
-                      <td>{formatDate(row.createdAt || row.date)}</td>
-                      <td style={{ textAlign: 'right' }}><MoreVertical size={16} style={{ color: 'var(--muted)' }} /></td>
+                      <td className="px-5 py-4 font-semibold text-slate-650 dark:text-slate-400">{formatFileSize(row.size)}</td>
+                      <td className="px-5 py-4 text-xs font-medium text-slate-550 dark:text-slate-450">{formatDate(row.createdAt || row.date)}</td>
+                      <td className="px-5 py-4 text-right"><MoreVertical size={16} className="inline text-slate-400" /></td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan="7" className={s.tableEmpty}>Bu guruh uchun fayllar topilmadi.</td>
+                      <td colSpan="7" className="text-center py-8 text-sm text-slate-450 dark:text-slate-500 font-medium">Bu guruh uchun fayllar topilmadi.</td>
                     </tr>
                   )}
                 </tbody>
@@ -1442,39 +1454,39 @@ export default function GroupDetail({ groupId }) {
 
           {/* EXAMS SUB-TAB */}
           {lessonTab === 'exams' && (
-            <div className={s.tableWrap}>
-              <table className={s.table}>
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl shadow-sm overflow-x-auto w-full">
+              <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Mavzu</th>
-                    <th>O'quvchilar</th>
-                    <th>Yiqildi</th>
-                    <th>Status</th>
-                    <th>Dars vaqti</th>
-                    <th>Berilgan vaqt</th>
-                    <th>E'lon qilingan vaqti</th>
-                    <th></th>
+                  <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-105 dark:border-slate-800">
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">#</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Mavzu</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider"><UserRound size={16} className="inline-block" /></th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider"><XCircle size={16} className="inline-block text-rose-500" /></th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Status</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Dars vaqti</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">Berilgan vaqt</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider">E'lon qilingan vaqti</th>
+                    <th className="px-5 py-4 font-semibold text-xs tracking-wider"></th>
                   </tr>
                 </thead>
                 <tbody>
                   {examRows.map((row, index) => (
-                    <tr key={row.id || index}>
-                      <td>{row.id || index + 1}</td>
-                      <td>
-                        <button className={s.viewBtn} style={{ color: 'var(--text)', fontWeight: 750 }}>{row.topic || 'Examination'}</button>
+                    <tr key={row.id || index} className="hover:bg-slate-50/40 dark:hover:bg-slate-800/20 border-b border-slate-100 dark:border-slate-850/60 transition-colors">
+                      <td className="px-5 py-4 text-xs font-bold text-slate-400">{row.id || index + 1}</td>
+                      <td className="px-5 py-4">
+                        <button className="text-slate-900 dark:text-white font-bold text-left hover:text-violet-600 dark:hover:text-violet-405 transition-colors cursor-pointer">{row.topic || 'Examination'}</button>
                       </td>
-                      <td style={{ fontWeight: 700 }}>{row.attendanceCount || students.length || 0}</td>
-                      <td style={{ fontWeight: 700, color: '#ef4444' }}>0</td>
-                      <td>
-                        <span className={`${s.badge} ${row.status === 'Faol' ? s.green : s.gray}`}>
+                      <td className="px-5 py-4 font-bold text-slate-700 dark:text-slate-300">{row.attendanceCount || students.length || 0}</td>
+                      <td className="px-5 py-4 font-bold text-rose-500">0</td>
+                      <td className="px-5 py-4">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${row.status === 'Faol' ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
                           {row.status || 'Tugagan'}
                         </span>
                       </td>
-                      <td>{formatDate(row.date)}<br /><span style={{ color: 'var(--muted)', fontSize: 11 }}>09:30</span></td>
-                      <td>{formatDate(row.date)}<br /><span style={{ color: 'var(--muted)', fontSize: 11 }}>09:28</span></td>
-                      <td style={{ color: 'var(--muted)' }}>{row.status === 'Faol' ? '-' : formatDate(row.date)}</td>
-                      <td style={{ textAlign: 'right' }}><MoreVertical size={16} style={{ color: 'var(--muted)' }} /></td>
+                      <td className="px-5 py-4 text-xs font-semibold text-slate-800 dark:text-slate-200 leading-normal">{formatDate(row.date)}<br /><span className="text-slate-400 font-medium">09:30</span></td>
+                      <td className="px-5 py-4 text-xs font-semibold text-slate-800 dark:text-slate-200 leading-normal">{formatDate(row.date)}<br /><span className="text-slate-400 font-medium">09:28</span></td>
+                      <td className="px-5 py-4 text-xs font-medium text-slate-500 dark:text-slate-450">{row.status === 'Faol' ? '-' : formatDate(row.date)}</td>
+                      <td className="px-5 py-4 text-right"><MoreVertical size={16} className="inline text-slate-400" /></td>
                     </tr>
                   ))}
                 </tbody>
@@ -1484,44 +1496,46 @@ export default function GroupDetail({ groupId }) {
 
           {/* JOURNAL SUB-TAB */}
           {lessonTab === 'journal' && (
-            <div className={s.journalSection}>
-              <div className={s.calendarRow}>
+            <div className="flex flex-col gap-5">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                 {lessonDays.map((day, index) => (
-                  <button 
-                    key={`${day.value}-${index}`} 
-                    className={`${s.calChip} ${index === selectedMonth ? s.chipActive : day.completed ? s.chipDone : ''}`} 
+                  <button
+                    key={`${day.value}-${index}`}
+                    className={`flex flex-col items-center justify-center p-2.5 rounded-xl border min-w-[56px] transition-all cursor-pointer ${index === selectedMonth ? 'bg-violet-600 border-violet-600 text-white shadow-md shadow-violet-600/10' : day.completed ? 'bg-slate-55/60 dark:bg-slate-800/40 border-slate-150 dark:border-slate-800 text-slate-400 dark:text-slate-500' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'}`}
                     onClick={() => handleLessonDaySelect(day, index)}
                   >
-                    <span>{day.month}</span>
-                    <strong>{day.day}</strong>
+                    <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">{day.month}</span>
+                    <strong className="text-base font-extrabold mt-0.5">{day.day}</strong>
                   </button>
                 ))}
               </div>
 
-              <form className={s.journalForm} onSubmit={handleLessonSubmit}>
-                <div className={s.journalFormHeader}>Yo'qlama va mavzu kiritish</div>
-                
-                <div className={s.journalFormGrid}>
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Sana <span className={s.req}>*</span></span>
-                    <input type="date" className={s.input} value={lessonForm.date} onChange={e => setLessonForm(prev => ({ ...prev, date: e.target.value }))} required />
+              <form className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-4" onSubmit={handleLessonSubmit}>
+                <div className="text-xs font-bold text-slate-400 dark:text-slate-505 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-50 dark:border-slate-850 pb-2">Yo'qlama va mavzu kiritish</div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Sana <span className="text-rose-500">*</span></span>
+                    <input type="date" className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all cursor-pointer" value={lessonForm.date} onChange={e => setLessonForm(prev => ({ ...prev, date: e.target.value }))} required />
                   </label>
-                  
-                  <div className={s.formGroup}>
-                    <span className={s.label}>Mavzu manbasi</span>
-                    <div style={{ display: 'flex', gap: 20, padding: 12, backgroundColor: 'var(--surface-strong)', border: '1px solid var(--border)', borderRadius: 10, width: 'fit-content' }}>
-                      <label className={s.dayLabel}>
+
+                  <div className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Mavzu manbasi</span>
+                    <div className="flex gap-5 bg-slate-50 dark:bg-slate-950/15 border border-slate-100/50 dark:border-slate-800/40 p-3 rounded-xl text-sm w-fit">
+                      <label className="flex items-center gap-2 font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
                         <input
                           type="radio"
+                          className="rounded-full text-violet-600 focus:ring-violet-500 h-4.5 w-4.5 accent-violet-600 cursor-pointer"
                           name="lesson-source"
                           checked={lessonSource === 'plan'}
                           onChange={() => setLessonSource('plan')}
                         />
                         O'quv reja bo'yicha
                       </label>
-                      <label className={s.dayLabel}>
+                      <label className="flex items-center gap-2 font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
                         <input
                           type="radio"
+                          className="rounded-full text-violet-600 focus:ring-violet-500 h-4.5 w-4.5 accent-violet-600 cursor-pointer"
                           name="lesson-source"
                           checked={lessonSource === 'custom'}
                           onChange={() => setLessonSource('custom')}
@@ -1533,50 +1547,50 @@ export default function GroupDetail({ groupId }) {
                 </div>
 
                 {lessonSource === 'plan' ? (
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Mavzu <span className={s.req}>*</span></span>
-                    <select className={s.formSelect} value={selectedPlanId} onChange={e => setSelectedPlanId(e.target.value)} required>
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Mavzu <span className="text-rose-500">*</span></span>
+                    <select className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all cursor-pointer" value={selectedPlanId} onChange={e => setSelectedPlanId(e.target.value)} required>
                       <option value="">O'quv reja API ulanmagan</option>
                       {lessonPlans.map(plan => (
                         <option key={plan.id} value={plan.id}>{plan.title || plan.topic || plan.name}</option>
                       ))}
                     </select>
-                    <small style={{ color: 'var(--muted)', fontSize: 10 }}>Backenddan o'quv reja endpointini bersangiz, shu select real mavzular bilan to'ladi.</small>
+                    <small className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">Backenddan o'quv reja endpointini bersangiz, shu select real mavzular bilan to'ladi.</small>
                   </label>
                 ) : (
-                  <label className={s.formGroup}>
-                    <span className={s.label}>Mavzu <span className={s.req}>*</span></span>
-                    <input className={s.input} value={lessonForm.topic} onChange={e => setLessonForm(prev => ({ ...prev, topic: e.target.value }))} placeholder="Mavzuni kiriting..." required />
+                  <label className="flex flex-col gap-1.5 w-full">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Mavzu <span className="text-rose-500">*</span></span>
+                    <input className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all" value={lessonForm.topic} onChange={e => setLessonForm(prev => ({ ...prev, topic: e.target.value }))} placeholder="Mavzuni kiriting..." required />
                   </label>
                 )}
 
-                <label className={s.formGroup}>
-                  <span className={s.label}>Tavsif (ixtiyoriy)</span>
-                  <textarea className={s.textarea} value={lessonForm.description} onChange={e => setLessonForm(prev => ({ ...prev, description: e.target.value }))} placeholder="Dars haqida qo'shimcha ma'lumot..." />
+                <label className="flex flex-col gap-1.5 w-full">
+                  <span className="text-xs font-bold text-slate-505 dark:text-slate-400 uppercase tracking-wider">Tavsif (ixtiyoriy)</span>
+                  <textarea className="w-full rounded-xl border border-slate-205 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm focus:border-violet-500 focus:outline-none dark:text-white transition-all h-20" value={lessonForm.description} onChange={e => setLessonForm(prev => ({ ...prev, description: e.target.value }))} placeholder="Dars haqida qo'shimcha ma'lumot..." />
                 </label>
 
-                <div className={`${s.attStatus} ${attendanceWindow.open ? s.attOpen : s.attClosed}`}>
+                <div className={`text-xs font-bold p-3.5 rounded-xl border transition-all ${attendanceWindow.open ? 'bg-emerald-50/50 dark:bg-emerald-950/10 text-emerald-600 dark:text-emerald-400 border-emerald-100/30' : 'bg-rose-50/50 dark:bg-rose-955/10 text-rose-600 dark:text-rose-450 border-rose-100/30'}`}>
                   {attendanceWindow.message}
                 </div>
 
-                <div className={s.attTable}>
-                  <div className={s.attHeader}>
+                <div className="flex flex-col border border-slate-100 dark:border-slate-800/80 rounded-2xl overflow-hidden bg-slate-50/30 dark:bg-slate-955/10 mt-2">
+                  <div className="grid grid-cols-[60px_1fr_220px] gap-4 px-5 py-3.5 bg-slate-100 dark:bg-slate-800/50 border-b border-slate-200/50 dark:border-slate-700/50 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     <span>#</span>
                     <span>O'quvchi ismi</span>
                     <span>Davomat</span>
                   </div>
                   {students.length > 0 ? students.map((student, index) => (
-                    <div key={student.id || student.name} className={s.attRow}>
-                      <span className={s.attNum}>{index + 1}</span>
-                      <span className={s.attStudent}>
-                        <span className={s.attInitials}>{student.initials}</span>
+                    <div key={student.id || student.name} className="grid grid-cols-[60px_1fr_220px] gap-4 px-5 py-3.5 items-center border-b border-slate-100 dark:border-slate-850 last:border-0 hover:bg-slate-100/30 dark:hover:bg-slate-800/20 transition-colors">
+                      <span className="text-xs font-bold text-slate-400">{index + 1}</span>
+                      <span className="flex items-center gap-3 font-semibold text-slate-800 dark:text-slate-200 text-sm">
+                        <span className="w-7 h-7 rounded-full bg-slate-105 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center font-bold text-[10px] border border-slate-200 dark:border-slate-700">{student.initials}</span>
                         {student.name}
                       </span>
-                      <div className={s.attBtns}>
+                      <div className="flex gap-2">
                         <button
                           type="button"
                           disabled={!canEditAttendance}
-                          className={`${s.attBtn} ${lessonForm.attendance[student.id] === true ? s.presentActive : ''}`}
+                          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer ${lessonForm.attendance[student.id] === true ? 'bg-emerald-500 border-emerald-500 text-white shadow-sm shadow-emerald-500/10' : 'border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed'}`}
                           onClick={() => toggleAttendance(student.id, true)}
                         >
                           Keldi
@@ -1584,7 +1598,7 @@ export default function GroupDetail({ groupId }) {
                         <button
                           type="button"
                           disabled={!canEditAttendance}
-                          className={`${s.attBtn} ${lessonForm.attendance[student.id] === false ? s.absentActive : ''}`}
+                          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer ${lessonForm.attendance[student.id] === false ? 'bg-rose-500 border-rose-500 text-white shadow-sm shadow-rose-500/10' : 'border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed'}`}
                           onClick={() => toggleAttendance(student.id, false)}
                         >
                           Kelmadi
@@ -1592,17 +1606,17 @@ export default function GroupDetail({ groupId }) {
                       </div>
                     </div>
                   )) : (
-                    <div style={{ textAlign: 'center', padding: 20, color: 'var(--muted)' }}>Bu guruhda o'quvchilar topilmadi.</div>
+                    <div className="text-center py-8 text-sm text-slate-450 dark:text-slate-500 font-medium">Bu guruhda o'quvchilar topilmadi.</div>
                   )}
                 </div>
 
-                <div className={s.journalActions}>
-                  <button type="button" className={s.cancelBtn} onClick={() => {
+                <div className="flex gap-3 justify-end mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <button type="button" className="px-5 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer" onClick={() => {
                     setLessonForm(prev => ({ ...prev, topic: '', description: '', attendance: {} }))
                     setSelectedPlanId('')
                   }}>Bekor qilish</button>
-                  
-                  <button type="submit" className={s.primaryBtn} disabled={savingLesson || !canEditAttendance}>
+
+                  <button type="submit" className="px-6 py-2.5 rounded-xl text-sm font-semibold bg-violet-600 hover:bg-violet-700 text-white transition-all shadow-md shadow-violet-600/10 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" disabled={savingLesson || !canEditAttendance}>
                     {savingLesson ? 'Saqlanmoqda...' : 'Saqlash'}
                   </button>
                 </div>
@@ -1614,35 +1628,35 @@ export default function GroupDetail({ groupId }) {
 
       {/* ATTENDANCE TAB */}
       {mainTab === 'attendance' && (
-        <section className={s.attendanceSection}>
-          <div className={s.attStatsGrid}>
-            <div className={s.attStatCard}>
-              <span>Umumiy yozuvlar</span>
-              <strong>{attendanceRecords.length}</strong>
+        <section className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="flex flex-col gap-0.5 p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl shadow-sm text-center">
+              <span className="text-xs font-semibold text-slate-450 dark:text-slate-500 uppercase tracking-wider">Umumiy yozuvlar</span>
+              <strong className="text-2xl font-bold text-slate-850 dark:text-white mt-1">{attendanceRecords.length}</strong>
             </div>
-            <div className={`${s.attStatCard} ${s.attPresent}`}>
-              <span>Kelgan</span>
-              <strong>{attendancePresentCount}</strong>
+            <div className="flex flex-col gap-0.5 p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl shadow-sm text-center">
+              <span className="text-xs font-semibold text-slate-450 dark:text-slate-500 uppercase tracking-wider">Kelgan</span>
+              <strong className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">{attendancePresentCount}</strong>
             </div>
-            <div className={`${s.attStatCard} ${s.attAbsent}`}>
-              <span>Kelmagan</span>
-              <strong>{attendanceAbsentCount}</strong>
+            <div className="flex flex-col gap-0.5 p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl shadow-sm text-center">
+              <span className="text-xs font-semibold text-slate-450 dark:text-slate-500 uppercase tracking-wider">Kelmagan</span>
+              <strong className="text-2xl font-bold text-rose-600 dark:text-rose-450 mt-1">{attendanceAbsentCount}</strong>
             </div>
           </div>
 
           {[1, 2, 3, 4, 5].map((month, monthIndex) => (
-            <div key={month} className={s.monthBlock}>
-              <h2 className={s.monthBlockTitle}>
-                {month}-o'quv oyi 
+            <div key={month} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-2xl p-5 shadow-sm flex flex-col gap-3.5">
+              <h2 className="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                {month}-o'quv oyi
                 {monthIndex === 0 && (
-                  <span className={s.currentBadge}>Joriy oy</span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-violet-50 dark:bg-violet-955/35 text-violet-650 dark:text-violet-400 uppercase tracking-wider border border-violet-100 dark:border-violet-900/30">Joriy oy</span>
                 )}
               </h2>
-              <div className={s.calendarRow}>
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                 {lessonDays.map((day, index) => (
-                  <button key={`${month}-${day.value}-${index}`} className={s.calChip} style={{ cursor: 'default' }}>
-                    <span>{monthIndex === 0 ? 'Jan' : day.month}</span>
-                    <strong>{monthIndex === 0 ? [2, 5, 7, 9, 12, 14, 16, 19, 21, 23, 26, 28, 30][index] : day.day}</strong>
+                  <button key={`${month}-${day.value}-${index}`} className={`flex flex-col items-center justify-center p-2.5 rounded-xl border min-w-[56px] transition-all cursor-default ${monthIndex === 0 && index < 7 ? 'bg-slate-50 dark:bg-slate-800/40 border-slate-150 dark:border-slate-800 text-slate-400 dark:text-slate-500' : 'bg-white dark:bg-slate-905 border-slate-205 dark:border-slate-705 text-slate-700 dark:text-slate-300'}`}>
+                    <span className="text-[10px] uppercase font-bold tracking-wider opacity-80">{monthIndex === 0 ? 'Jan' : day.month}</span>
+                    <strong className="text-base font-extrabold mt-0.5">{monthIndex === 0 ? [2, 5, 7, 9, 12, 14, 16, 19, 21, 23, 26, 28, 30][index] : day.day}</strong>
                   </button>
                 ))}
               </div>
@@ -1653,16 +1667,16 @@ export default function GroupDetail({ groupId }) {
 
       {/* VIDEO PREVIEW MODAL */}
       {previewVideo && (
-        <div className={s.modalOverlay} onClick={() => setPreviewVideo(null)}>
-          <div className={s.modal} onClick={e => e.stopPropagation()} style={{ maxWidth: 680 }}>
-            <div className={s.modalHeader}>
-              <h2>{previewVideo.name || 'Video'}</h2>
-              <button className={s.modalCloseBtn} onClick={() => setPreviewVideo(null)} aria-label="Yopish">
+        <div className="fixed inset-0 z-[150] flex justify-center items-center bg-slate-900/40 backdrop-blur-sm p-4" onClick={() => setPreviewVideo(null)}>
+          <div className="w-full max-w-[680px] bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-2xl flex flex-col gap-4" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-start border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">{previewVideo.name || 'Video'}</h2>
+              <button className="p-1 text-slate-400 hover:text-slate-655 cursor-pointer" onClick={() => setPreviewVideo(null)} aria-label="Yopish">
                 <X size={20} />
               </button>
             </div>
-            <div className={s.modalBody} style={{ backgroundColor: '#000', padding: 0 }}>
-              <video src={previewVideo.url} controls autoPlay style={{ width: '100%', aspectRatio: '16/9' }} />
+            <div className="rounded-xl overflow-hidden bg-black aspect-video flex justify-center items-center">
+              <video src={previewVideo.url} controls autoPlay className="w-full h-full" />
             </div>
           </div>
         </div>
@@ -1670,18 +1684,18 @@ export default function GroupDetail({ groupId }) {
 
       {/* FILE UPLOAD MODAL */}
       {isVideoModalOpen && (
-        <div className={s.modalOverlay} onClick={closeVideoModal}>
-          <div className={s.modal} onClick={e => e.stopPropagation()}>
-            <div className={s.modalHeader}>
-              <h2>Fayl yuklash</h2>
-              <button className={s.modalCloseBtn} onClick={closeVideoModal} aria-label="Yopish">
+        <div className="fixed inset-0 z-[150] flex justify-center items-center bg-slate-900/40 backdrop-blur-sm p-4" onClick={closeVideoModal}>
+          <div className="w-full max-w-[620px] bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-2xl flex flex-col gap-5 overflow-y-auto max-h-[95vh]" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-start border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-lg font-bold text-slate-905 dark:text-white">Fayl yuklash</h2>
+              <button className="p-1 text-slate-400 hover:text-slate-650 cursor-pointer" onClick={closeVideoModal} aria-label="Yopish">
                 <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleVideoUpload} className={s.modalBody}>
+            <form onSubmit={handleVideoUpload} className="flex flex-col gap-4">
               <label
-                className={s.uploadBox}
+                className="border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-violet-500 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-slate-55/30 dark:bg-slate-950/10"
                 onDragOver={e => e.preventDefault()}
                 onDrop={e => {
                   e.preventDefault()
@@ -1691,65 +1705,53 @@ export default function GroupDetail({ groupId }) {
                 <input
                   type="file"
                   accept="*/*"
-                  style={{ display: 'none' }}
+                  className="hidden"
                   onChange={e => handleVideoFile(e.target.files?.[0])}
                 />
-                <div className={s.uploadIcon}>
+                <div className="w-14 h-14 bg-violet-50 dark:bg-violet-950/30 text-violet-600 dark:text-violet-400 rounded-2xl flex items-center justify-center mb-3">
                   <Upload size={24} />
                 </div>
-                <p>Faylni yuklash uchun ushbu hudud ustiga bosing yoki faylni shu yerga olib keling</p>
-                <small>Darslik, rasm, video yoki qo'shimcha material fayllarini yuklash mumkin</small>
+                <strong className="font-bold text-sm text-slate-800 dark:text-slate-200">Faylni yuklash uchun ushbu hudud ustiga bosing yoki faylni shu yerga olib keling</strong>
+                <small className="text-xs text-slate-450 dark:text-slate-500 mt-1">Darslik, rasm, video yoki qo'shimcha material fayllarini yuklash mumkin</small>
               </label>
 
               {videoFile && (
-                <div style={{ border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-                  <table className={s.videoTable}>
-                    <thead>
-                      <tr>
-                        <th>Fayl formati</th>
-                        <th>Dars</th>
-                        <th>Fayl nomi</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{videoFile.name}</td>
-                        <td>
-                          <select className={s.formSelect} style={{ padding: '4px 8px' }} value={videoLessonId} onChange={e => setVideoLessonId(e.target.value)} required>
-                            <option value="">Darsni tanlang</option>
-                            {allLessons.map((lesson, index) => (
-                              <option key={lesson.id || index} value={lesson.id || index}>{lesson.topic || `Dars ${index + 1}`}</option>
-                            ))}
-                          </select>
-                        </td>
-                        <td>
-                          <input className={s.input} style={{ padding: '4px 8px' }} value={videoName} onChange={e => setVideoName(e.target.value)} required />
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            className={s.deleteBtn}
-                            style={{ width: 28, height: 28 }}
-                            onClick={() => {
-                              setVideoFile(null)
-                              setVideoName('')
-                              setVideoLessonId('')
-                            }}
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="flex flex-col border border-slate-150 dark:border-slate-800 rounded-xl overflow-hidden mt-4">
+                  <div className="grid grid-cols-[1.5fr_1fr_1.5fr_50px] gap-3 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                    <span>Fayl formati</span>
+                    <span><b>*</b> Dars</span>
+                    <span><b>*</b> Fayl nomi</span>
+                    <span></span>
+                  </div>
+                  <div className="grid grid-cols-[1.5fr_1fr_1.5fr_50px] gap-3 px-4 py-3 items-center border-t border-slate-150 dark:border-slate-800/60 text-xs">
+                    <span className="font-medium text-slate-700 dark:text-slate-300 truncate">{videoFile.name}</span>
+                    <select className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-xs focus:border-violet-500 focus:outline-none dark:text-white cursor-pointer" value={videoLessonId} onChange={e => setVideoLessonId(e.target.value)} required>
+                      <option value="">Darsni tanlang</option>
+                      {allLessons.map((lesson, index) => (
+                        <option key={lesson.id || index} value={lesson.id || index}>{lesson.topic || `Dars ${index + 1}`}</option>
+                      ))}
+                    </select>
+                    <input className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-xs focus:border-violet-500 focus:outline-none dark:text-white" value={videoName} onChange={e => setVideoName(e.target.value)} required />
+                    <button
+                      type="button"
+                      className="p-1 text-slate-400 hover:text-rose-650 transition-colors cursor-pointer justify-self-center"
+                      onClick={() => {
+                        setVideoFile(null)
+                        setVideoName('')
+                        setVideoLessonId('')
+                      }}
+                      aria-label="Faylni olib tashlash"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </div>
               )}
 
-              <div className={s.modalActions}>
-                <button type="button" className={s.cancelBtn} onClick={closeVideoModal}>Bekor qilish</button>
+              <div className="flex gap-3 justify-end border-t border-slate-100 dark:border-slate-850 pt-4 mt-2">
+                <button type="button" className="px-4 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-755 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer" onClick={closeVideoModal}>Bekor qilish</button>
                 {videoFile && (
-                  <button type="submit" className={s.primaryBtn} disabled={uploadingFile || !videoLessonId || !videoName.trim()}>
+                  <button type="submit" className="px-5 py-2 rounded-xl text-sm font-semibold bg-violet-600 hover:bg-violet-705 text-white shadow-md shadow-violet-600/10 cursor-pointer disabled:opacity-40" disabled={uploadingFile || !videoLessonId || !videoName.trim()}>
                     {uploadingFile ? 'Yuklanmoqda...' : 'Faylni yuklash'}
                   </button>
                 )}
