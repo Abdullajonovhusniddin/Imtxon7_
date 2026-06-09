@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { getAuthToken } from './api'
+
+const getAuthToken = () => sessionStorage.getItem('accessToken')
 
 // Lazy loading pages for better performance
 const LoginPage = lazy(() => import('./pages/LoginPage'))

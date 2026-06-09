@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
-import { deleteJson, getJson, getUserRole, patchJson, postJson } from '../api'
+import { api } from '../api'
+
+const getUserRole = () => {
+  try {
+    const token = sessionStorage.getItem('accessToken')
+    if (!token) return ''
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')))
+    return String(payload?.role || payload?.type || payload?.user_role || '').toLowerCase()
+  } catch { return '' }
+}
 import { 
   LayoutDashboard, 
   Users, 
@@ -305,7 +314,7 @@ function DashboardPage({ activePage = 'dashboard' }) {
         ? [{ id: 'myGroups', label: 'Mening guruhlarim', endpoint: '/students/my/groups', icon: Home, color: '#7c3aed' }]
         : dashboardStatsConfig
       const results = await Promise.allSettled(
-        statsConfig.map(item => getJson(item.endpoint))
+        statsConfig.map(item => api.get(item.endpoint).then(r => r.data))
       )
 
       setStatsData(statsConfig.map((item, index) => ({
@@ -324,13 +333,13 @@ function DashboardPage({ activePage = 'dashboard' }) {
           if (firstGroupId) {
             let lessonsArr = []
             try {
-              const lessonsRes = await getJson(LESSONS_API)
+              const lessonsRes = await api.get(LESSONS_API).then(r => r.data)
               lessonsArr = getApiItems(lessonsRes).filter(item => {
                 const itemGroupId = item.group_id || item.groupId || item.group?.id || item.Group?.id
                 return !itemGroupId || String(itemGroupId) === String(firstGroupId)
               })
             } catch {
-              const lessonsRes = await getJson(`${LESSONS_BY_GROUP_API}/${firstGroupId}`)
+              const lessonsRes = await api.get(`${LESSONS_BY_GROUP_API}/${firstGroupId}`).then(r => r.data)
               lessonsArr = getApiItems(lessonsRes)
             }
 
@@ -415,10 +424,7 @@ function DashboardPage({ activePage = 'dashboard' }) {
   }, [language])
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userPhone')
-    document.cookie = 'token=; path=/; max-age=0; SameSite=Lax'
-    document.cookie = 'userPhone=; path=/; max-age=0; SameSite=Lax'
+    sessionStorage.removeItem('accessToken')
     navigate('/')
   }
 

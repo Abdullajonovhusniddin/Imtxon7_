@@ -1,16 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import loginImg from '../assets/image.png'
-import { postJson, saveAuth } from '../api'
-
-const LOGIN_API = 'https://najot-edu.softwareengineer.uz/api/v1/auth/login'
-const DEFAULT_PHONE = '998975661099'
-const DEFAULT_PASSWORD = 'Benazir99!'
+import { api } from '../api'
 
 function LoginPage() {
   const navigate = useNavigate()
-  const [phone, setPhone] = useState(DEFAULT_PHONE)
-  const [password, setPassword] = useState(DEFAULT_PASSWORD)
+  const [phone, setPhone] = useState('998975661099')
+  const [password, setPassword] = useState('Benazir99!')
   const [showPass, setShowPass] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,9 +18,9 @@ function LoginPage() {
     setLoading(true)
 
     try {
-      const data = await postJson(LOGIN_API, { phone: phone.trim(), password })
+      const res = await api.post('/auth/login', { phone: phone.trim(), password })
+      const data = res.data
 
-      // Har xil API'lar har xil nom bilan token berishi mumkin
       const token =
         data?.token ||
         data?.access_token ||
@@ -34,35 +30,14 @@ function LoginPage() {
         data?.data?.accessToken ||
         data?.user?.token
 
-      const user =
-        data?.user ||
-        data?.data?.user ||
-        data?.data?.student ||
-        data?.data?.teacher ||
-        data?.student ||
-        data?.teacher
-      const role =
-        user?.role ||
-        user?.Role?.name ||
-        data?.role ||
-        data?.data?.role ||
-        data?.user_role ||
-        data?.data?.user_role ||
-        data?.type ||
-        data?.data?.type ||
-        (data?.data?.teacher || data?.teacher ? 'teacher' : '') ||
-        (data?.data?.student || data?.student ? 'student' : '')
-      const normalizedUser = role ? { ...(user || {}), role } : user
-      
       if (token) {
-        saveAuth({ token, userPhone: phone, user: normalizedUser })
+        sessionStorage.setItem('accessToken', token)
         navigate('/dashboard')
       } else {
-        console.error('Token topilmadi! API response tarkibini tekshiring.')
         setError("Tizimda xatolik: Token topilmadi.")
       }
     } catch (err) {
-      setError(err.message || "Server bilan aloqa uzildi. Iltimos qaytadan urinib ko'ring.")
+      setError(err.response?.data?.message || err.message || "Server bilan aloqa uzildi.")
     } finally {
       setLoading(false)
     }
