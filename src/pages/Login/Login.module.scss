@@ -1,0 +1,232 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 100vh;
+}
+
+.left_side {
+    background: rgb(29, 45, 91);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left_icon {
+    height: 85%;
+    width: 85%;
+}
+
+.lms__icon {
+    height: 75px;
+    width: 75px;
+    display: block;
+    margin: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__label {
+        font-weight: 600;
+        font-size: 13px;
+        color: #4a5568;
+        letter-spacing: 0.3px;
+    }
+
+    &__input {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        outline: none;
+        font-size: 14px;
+        color: var(--text);
+        background-color: var(--surface);
+        transition: all 0.2s ease-in-out;
+
+        &::placeholder {
+            font-size: 14px;
+            color: #a0aec0;
+        }
+
+        &:focus {
+            border-color: rgb(29, 45, 91);
+            box-shadow: 0 0 0 3px rgba(29, 45, 91, 0.15);
+        }
+    }
+
+    &__button {
+        background: rgb(29, 45, 91);
+        border: none;
+        color: white;
+        padding: 11px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease-in-out;
+        margin-top: 8px;
+        box-shadow: 0 4px 6px -1px rgba(29, 45, 91, 0.2), 0 2px 4px -1px rgba(29, 45, 91, 0.1);
+
+        &:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(29, 45, 91, 0.25), 0 3px 6px -1px rgba(29, 45, 91, 0.15);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+.box {
+    display: flex;
+    gap: 6px;
+    flex-direction: column;
+}
+
+.right_side {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    overflow: hidden;
+    background-color: #fafbfc;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.right_container {
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin-bottom: 12px;
+    color: #1d2d5b;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 1.4;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.lms_login {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #1d2d5b;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.lisence {
+    position: absolute;
+    bottom: 15px;
+    font-size: 11px;
+    color: #8c98a5;
+    text-align: center;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-6px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(6px);
+    }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+// Dark mode styles
+:global(.dark) {
+    .right_side {
+        background-color: var(--bg);
+    }
+    .title, .lms_login {
+        color: var(--text);
+    }
+    .form {
+        &__label {
+            color: var(--muted);
+        }
+        &__input {
+            background-color: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
+            &::placeholder {
+                color: var(--muted);
+            }
+            &:focus {
+                border-color: var(--primary);
+            }
+        }
+    }
+}
+
+// media
+@media(max-width:768px) {
+    .container {
+        grid-template-columns: repeat(1, 1fr);
+        height: auto;
+    }
+
+    .left_side {
+        display: none;
+    }
+    
+    .right_side {
+        padding: 60px 20px;
+    }
+}
+
+
+@media (max-width:640px) {
+    .right_container {
+        max-width: 100%;
+    }
+    .title { font-size: 10px; }
+    .lms_login { font-size: 16px; margin: 16px 0; }
+}
+
+@media (max-width:400px) {
+    .right_container {
+        padding: 0 10px;
+    }
+
+    .lisence {
+        font-size: 10px;
+    }
+}
+
+@media(max-width:320px) {
+    .right_container {
+        padding: 0 20px;
+    }
+}

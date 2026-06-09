@@ -1,0 +1,312 @@
+.roomsContainer {
+    padding: 24px;
+    background: var(--surface);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.titleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.refreshIcon {
+    color: #4a4a6a;
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: rotate(180deg);
+        color: #6c35de;
+    }
+}
+
+.addBtn {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: #6c35de;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #5a2cc0;
+    }
+
+    svg {
+        font-size: 20px;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 8px;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--surface-strong);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        border-radius: 5px;
+        
+        &:hover {
+            background: var(--surface-strong);
+        }
+    }
+
+    &::-webkit-scrollbar-button:single-button {
+        background-color: transparent;
+        display: block;
+        background-size: 8px;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 14px;
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-button:single-button:vertical:decrement {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23e2e8f0'><polygon points='50,20 15,80 85,80'/></svg>");
+    }
+
+    &::-webkit-scrollbar-button:single-button:vertical:increment {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23e2e8f0'><polygon points='50,80 15,20 85,20'/></svg>");
+    }
+}
+
+.card {
+    padding: 20px;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        border-color: transparent;
+    }
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.roomName {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 4px;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+
+    svg {
+        font-size: 18px;
+    }
+}
+
+.deleteBtn {
+    color: #ff4d4f;
+
+    &:hover {
+        background: rgba(255, 77, 79, 0.1);
+    }
+}
+
+.editBtn {
+    color: #6c35de;
+
+    &:hover {
+        background: rgba(108, 53, 222, 0.1);
+    }
+}
+
+.capacity {
+    font-size: 13px;
+    color: #4a4a6a;
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+
+        span {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+    }
+
+    input {
+        padding: 10px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #111827;
+        transition: border-color 0.2s;
+
+        &:focus {
+            outline: none;
+            border-color: #6c35de;
+        }
+
+        &::placeholder {
+            color: var(--muted);
+        }
+    }
+}
+
+.cancelBtn {
+    background: var(--surface);
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #f9fafb;
+    }
+}
+
+.saveBtn {
+    background: #9333ea;
+    color: #ffffff;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #7e22ce;
+    }
+}
+
+.backIconBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f7;
+    border: none;
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    color: #4a4a6a;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #ebebee;
+    }
+}
+
+.archiveBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f5f5f7;
+    color: #4a4a6a;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #ebebee;
+    }
+
+    svg {
+        font-size: 20px;
+    }
+}
+
+.archivedCard {
+    opacity: 0.85;
+    filter: grayscale(20%);
+
+    &:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+    }
+}
+
+.emptyState {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #8a8a9a;
+    font-size: 15px;
+}

@@ -1,0 +1,134 @@
+﻿.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    background: var(--surface);
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    gap: 16px;
+}
+
+.left,
+.right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.iconBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--surface);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        background: var(--surface-strong);
+        color: var(--text);
+        border-color: var(--primary);
+    }
+}
+
+.addBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 46px;
+    padding: 0 18px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: var(--primary-strong);
+    }
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    width: min(100%, 320px);
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0 14px;
+    height: 44px;
+    transition: border-color 0.2s ease;
+
+    &:focus-within {
+        border-color: var(--primary);
+    }
+
+    .searchIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        color: var(--muted);
+    }
+
+    input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 14px;
+        color: var(--text);
+        width: 100%;
+
+        &::placeholder {
+            color: var(--muted);
+        }
+    }
+}
+
+.language {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        background: var(--surface-strong);
+        border-color: var(--primary);
+    }
+
+    .langIcon {
+        color: var(--muted);
+    }
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--primary);
+    color: #ffffff;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}

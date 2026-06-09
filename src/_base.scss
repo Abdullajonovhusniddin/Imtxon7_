@@ -1,0 +1,137 @@
+:root {
+    color-scheme: light;
+    font-family: 'Inter', sans-serif;
+    --bg: #eef0f5;
+    --surface: #ffffff;
+    --surface-strong: #f8fafc;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --primary: #6c35de;
+    --primary-strong: #5a2cc0;
+    --card-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+    color-scheme: dark;
+    --bg: #0f172a; // Slate 900
+    --surface: #1e293b; // Slate 800
+    --surface-strong: #334155; // Slate 700
+    --text: #f8fafc; // Slate 50
+    --muted: #94a3b8; // Slate 400
+    --border: #334155;
+    --primary: #6c35de;
+    --primary-strong: #8b5cf6;
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+
+    // Global elementlar
+    body, #root, main, [class*="container"], [class*="content"], [class*="tableCard"], [class*="tableWrapper"], [class*="table_card"] {
+        background-color: var(--bg) !important;
+        color: var(--text) !important;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, span, label, li, td, th {
+        color: var(--text) !important;
+    }
+
+    // Jadvallar va Hover (Matn ko'rinishi uchun)
+    table, .table, [class*="table"] {
+        background-color: transparent !important;
+        color: var(--text) !important;
+
+        tr {
+            background-color: transparent !important;
+            border-bottom: 1px solid var(--border) !important;
+            &:hover {
+                background-color: var(--surface-strong) !important; 
+                cursor: pointer;
+            }
+        }
+        th, thead {
+            background-color: var(--surface-strong) !important;
+            color: var(--text) !important;
+            border-bottom: 2px solid var(--border) !important;
+        }
+    }
+
+    // Kartochkalar
+    [class*="card"], [class*="statCard"], [class*="accordionItem"] {
+        background-color: var(--surface) !important;
+        border-color: var(--border) !important;
+    }
+
+    // Modal va Dialoglar (Qo'shish oynalari)
+    [class*="modal"], [class*="Modal"], [class*="dialog"], [class*="Dialog"] {
+        background-color: var(--surface) !important;
+        border: 1px solid var(--border) !important;
+        
+        input, select, textarea {
+            background-color: var(--bg) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+            &::placeholder { color: var(--muted) !important; }
+        }
+
+        [class*="header"], [class*="footer"] {
+            background-color: transparent !important;
+            border-color: var(--border) !important;
+        }
+    }
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family, 'Inter'), sans-serif;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+// Global Responsive Table Wrapper
+[class*="tableWrapper"] {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+
+    table {
+        min-width: 800px; // Mobil qurilmalarda jadval qisqarib ketmasligi uchun
+    }
+}
+
+// Responsive Utility for Containers
+[class*="container"] {
+    padding-left: 15px;
+    padding-right: 15px;
+    @media (min-width: 768px) {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
